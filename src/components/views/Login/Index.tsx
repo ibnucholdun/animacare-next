@@ -91,6 +91,16 @@ const LoginView = (props: Props) => {
                 className="bg-slate-800 text-white w-full border-none p-[10px] rounded text-lg hover:bg-white hover:text-blueLight">
                 {isLoading ? "Loading..." : "Login"}
               </button>
+              <p className="text-white text-center my-4">Atau</p>
+              <button
+                type="button"
+                className="bg-slate-800 text-white w-full border-none p-[10px] rounded text-lg hover:bg-white hover:text-blueLight items-center justify-center flex"
+                onClick={() =>
+                  signIn("google", { callbackUrl, redirect: false })
+                }>
+                <i className="bx bxl-google pr-2 text-2xl" />
+                Login dengan Google
+              </button>
             </form>
           </div>
         </div>
