@@ -9,7 +9,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import bcrypt from "bcrypt";
 
 const firestore = getFirestore(app);
 
@@ -25,66 +24,30 @@ export const retriveDataById = async (collectionName: string, id: string) => {
   return data;
 };
 
-export const signUp = async (
-  userData: {
-    email: string;
-    password: string;
-    fullname: string;
-    role?: string;
-    phone: string;
-  },
-  callback: Function
+export const retriveDataByField = async (
+  collectionName: string,
+  field: string,
+  value: string
 ) => {
   const q = query(
-    collection(firestore, "users"),
-    where("email", "==", userData.email)
+    collection(firestore, collectionName),
+    where(field, "==", value)
   );
   const snapshot = await getDocs(q);
   const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-  if (data.length > 0) {
-    callback(false);
-  } else {
-    if (!userData.role) {
-      userData.role = "member";
-    }
-    userData.password = await bcrypt.hash(userData.password, 10);
-    await addDoc(collection(firestore, "users"), userData)
-      .then(() => {
-        callback(true);
-      })
-      .catch((error) => {
-        callback(false);
-      });
-  }
+  return data;
 };
 
-export const signIn = async (email: string) => {
-  const q = query(collection(firestore, "users"), where("email", "==", email));
-  const snapshot = await getDocs(q);
-  const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-  if (data) {
-    return data[0];
-  } else {
-    return null;
-  }
-};
-
-export const loginWithGoogle = async (data: any, callback: Function) => {
-  const q = query(
-    collection(firestore, "users"),
-    where("email", "==", data.email)
-  );
-  const snapshot = await getDocs(q);
-  const user = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-  if (user.length > 0) {
-    callback(user[0]);
-  } else {
-    data.role = "member";
-    await addDoc(collection(firestore, "users"), data).then(() => {
-      callback(data);
+export const addData = async (
+  collectionName: string,
+  data: any,
+  callback: Function
+) => {
+  await addDoc(collection(firestore, collectionName), data)
+    .then(() => {
+      callback(true);
+    })
+    .catch((error) => {
+      callback(false);
     });
-  }
 };
