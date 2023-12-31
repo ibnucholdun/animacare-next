@@ -1,7 +1,7 @@
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import Image from "next/image";
+import authServices from "@/services/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -26,13 +26,7 @@ const RegisterView = (props: Props) => {
       password: form.password.value,
     };
 
-    const result = await fetch("/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const result = await authServices.registerAccount(data);
 
     if (result.status === 200) {
       setIsLoading(false);
