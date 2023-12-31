@@ -1,4 +1,7 @@
-import Image from "next/image";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import authServices from "@/services/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -23,13 +26,7 @@ const RegisterView = (props: Props) => {
       password: form.password.value,
     };
 
-    const result = await fetch("/api/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const result = await authServices.registerAccount(data);
 
     if (result.status === 200) {
       setIsLoading(false);
@@ -42,99 +39,54 @@ const RegisterView = (props: Props) => {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center flex-col">
-      <div className="lg:w-2/3 flex lg:flex-row border sm:flex-col">
-        <div className="lg:w-2/4 sm:w-full bg-blueLight p-8">
-          <h1 className="text-white text-3xl font-semibold text-center">
-            Register
-          </h1>
-          <div className="p-[20px]">
-            {error && <p className="text-red-500 text-center">{error}</p>}
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col my-[20px]">
-                <label
-                  htmlFor="email"
-                  className="text-white font-semibold text-xl">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="p-[10px]  mt-[5px] border-none outline-none rounded"
-                />
-              </div>
-              <div className="flex flex-col my-[20px]">
-                <label
-                  htmlFor="fullname"
-                  className="text-white font-semibold text-xl">
-                  Fullname
-                </label>
-                <input
-                  type="text"
-                  name="fullname"
-                  id="fullname"
-                  className="p-[10px]  mt-[5px] border-none outline-none rounded"
-                />
-              </div>
-              <div className="flex flex-col my-[20px]">
-                <label
-                  htmlFor="phone"
-                  className="text-white font-semibold text-xl">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  className="p-[10px]  mt-[5px] border-none outline-none rounded"
-                />
-              </div>
-              <div className="flex flex-col mt-[20px] mb-[10px]">
-                <label
-                  htmlFor="password"
-                  className="text-white font-semibold text-xl">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  className="p-[10px]  mt-[5px] border-none outline-none rounded"
-                />
-              </div>
-              <p className="text-white text-right mb-4">
-                Sudah punya akun? Login{" "}
-                <Link href="/auth/login" className="text-slate-800 underline">
-                  disini
-                </Link>
-              </p>
-              <button
-                type="submit"
-                className="bg-slate-800 text-white w-full border-none p-[10px] rounded text-lg hover:bg-white hover:text-blueLight">
-                {isLoading ? "Loading..." : "Register"}
-              </button>
-            </form>
-          </div>
-        </div>
-        <div className="w-2/4 bg-white p-6 pt-8">
-          <h1 className="text-3xl font-semibold text-center text-blueLight">
-            Haloo.... Pencinta Hewan
-          </h1>
-          <p className="text-center mt-4 text-sm">
-            Isi data dirimu dengan melengkapi form ini untuk bergabung bersama
-            kami
-            <Image
-              src="/authIcon.png"
-              width={300}
-              height={300}
-              alt="logo register"
-              className="mx-auto mt-4  w-[500px]"
-            />
+    <AuthLayout
+      title="Register"
+      tagline="Haloo.... Pencinta Hewan"
+      description="Isi data dirimu dengan melengkapi form ini untuk bergabung bersama kami"
+      image="/authIcon.png">
+      <div className="p-[20px]">
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            placehoder="Masukkan Email..."
+          />
+          <Input
+            label="Nama Lengkap"
+            name="fullname"
+            type="text"
+            placehoder="Masukkan nama lengkap..."
+          />
+          <Input
+            label="Telepon"
+            name="phone"
+            type="text"
+            placehoder="Masukkan nomor tel..."
+          />
+          <Input
+            label="Password"
+            name="password"
+            type="password"
+            placehoder="Masukkan Password..."
+          />
+
+          <p className="text-white text-right mb-4 text-sm">
+            Sudah punya akun? Login{" "}
+            <Link href="/auth/login" className="text-slate-800 underline">
+              disini
+            </Link>
           </p>
-        </div>
+
+          <Button
+            type="submit"
+            className="bg-slate-800 text-white w-full hover:bg-white hover:text-blueLight">
+            {isLoading ? "Loading..." : "Register"}
+          </Button>
+        </form>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 
