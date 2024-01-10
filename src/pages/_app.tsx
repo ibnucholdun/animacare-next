@@ -11,7 +11,7 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
 });
 
-const disableNavbar = ["auth"];
+const disableNavbar = ["auth", "admin"];
 
 export default function App({
   Component,

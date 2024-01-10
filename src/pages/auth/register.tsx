@@ -1,4 +1,4 @@
-import RegisterView from "@/components/views/Register";
+import RegisterView from "@/components/views/auth/Register";
 import React from "react";
 
 type Props = {};
