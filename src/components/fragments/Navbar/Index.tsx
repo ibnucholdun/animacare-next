@@ -8,8 +8,8 @@ type Props = {};
 const Navbar = (props: Props) => {
   const { data } = useSession();
   return (
-    <div className="flex md:flex-row justify-between items-center border-b-2">
-      <div className="p-3 ml-7">
+    <div className="flex md:flex-row justify-between items-center border-b-2 px-24">
+      <div className="py-5 ">
         <Image
           src="/logoAnimacare.png"
           alt="Logo Animacare"
@@ -18,22 +18,20 @@ const Navbar = (props: Props) => {
           className="w-[200px] h-[40px] object-contain"
         />
       </div>
-      <div className="">
-        <nav className="px-9">
-          <ul className="flex flex-row gap-10 items-center">
-            <li className="font-md cursor-default">Beranda</li>
-            <li className="font-md cursor-default">Artikel</li>
-            <li className="font-md cursor-default">Forum</li>
-            <li className="font-md cursor-default">Belanja</li>
-            <Button
-              type="button"
-              className=" bg-blueLight px-4 text-white hover:bg-white hover:text-blueLight text-md"
-              onClick={() => (data ? signOut() : signIn())}>
-              {data ? "Logout" : "Login"}
-            </Button>
-          </ul>
-        </nav>
-      </div>
+      <nav className="">
+        <ul className="flex flex-row gap-10 items-center">
+          <li className="font-md cursor-default">Beranda</li>
+          <li className="font-md cursor-default">Artikel</li>
+          <li className="font-md cursor-default">Forum</li>
+          <li className="font-md cursor-default">Belanja</li>
+          <Button
+            type="button"
+            className=" bg-blueLight px-4 text-white hover:bg-white hover:text-blueLight text-md"
+            onClick={() => (data ? signOut() : signIn())}>
+            {data ? "Logout" : "Login"}
+          </Button>
+        </ul>
+      </nav>
     </div>
   );
 };

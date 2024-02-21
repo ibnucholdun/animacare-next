@@ -14,7 +14,7 @@ export const signUp = async (
   callback: Function
 ) => {
   const data = await retriveDataByField("users", "email", userData.email);
-
+  console.log(data);
   if (data.length > 0) {
     callback(false);
   } else {

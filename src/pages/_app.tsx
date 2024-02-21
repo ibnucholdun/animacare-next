@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/fragments/Navbar/Index";
+import Footer from "@/components/fragments/Footer";
 import { useRouter } from "next/router";
 
 const poppins = Poppins({
@@ -11,7 +12,7 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
 });
 
-const disableNavbar = ["auth", "admin"];
+const disableNavbarAndFooter = ["auth", "admin"];
 
 export default function App({
   Component,
@@ -28,8 +29,9 @@ export default function App({
         />
       </Head>
       <div className={poppins.className}>
-        {!disableNavbar.includes(pathname.split("/")[1]) && <Navbar />}
+        {!disableNavbarAndFooter.includes(pathname.split("/")[1]) && <Navbar />}
         <Component {...pageProps} />
+        {!disableNavbarAndFooter.includes(pathname.split("/")[1]) && <Footer />}
       </div>
     </SessionProvider>
   );
