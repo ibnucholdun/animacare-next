@@ -7,11 +7,12 @@ import { useRouter } from "next/router";
 
 type Props = {};
 
-const activeNavbar = ["artikel"];
+const activeArtikel = ["artikel"];
+const activeForum = ["forum"];
+
 const Navbar = (props: Props) => {
   const { data } = useSession();
   const { pathname } = useRouter();
-  const activeNavigation: any = activeNavbar.includes(pathname.split("/")[1]);
 
   return (
     <div className="flex md:flex-row justify-between items-center border-b-2 px-24">
@@ -37,7 +38,7 @@ const Navbar = (props: Props) => {
           <Link
             href="/artikel"
             className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
-              activeNavigation &&
+              activeArtikel.includes(pathname.split("/")[1]) &&
               "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
             }`}>
             Artikel
@@ -45,7 +46,7 @@ const Navbar = (props: Props) => {
           <Link
             href="/forum"
             className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
-              pathname === "/forum" &&
+              activeForum.includes(pathname.split("/")[1]) &&
               "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
             }`}>
             Forum
