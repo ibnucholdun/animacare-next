@@ -1,10 +1,22 @@
 import CardForum from "@/components/fragments/CardForum";
+import CardForumSkeleton from "@/components/fragments/CardForumSkeleton";
+import forumServices from "@/services/forum";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-type Props = {};
+type Props = {
+  forum: any;
+};
 
-const ForumView = (props: Props) => {
+const ForumView: React.FC<Props> = ({ forum }) => {
+  const [forumsData, setForumsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setForumsData(forum);
+    setIsLoading(false);
+  }, [forum]);
+
   return (
     <div className="mx-24 my-12 min-h-screen">
       <div className="flex justify-between items-center">
@@ -21,13 +33,20 @@ const ForumView = (props: Props) => {
         </div>
       </div>
       <div className="my-12">
-        <CardForum
-          fullname="ibnu"
-          date="22 Februari 2024"
-          title="merawat kucing"
-          description="disini ada yang tau ga cara merawat kucing dengan benar?"
-          link="1"
-        />
+        {isLoading
+          ? Array.from({ length: 3 }).map((_, index) => (
+              <CardForumSkeleton key={index} />
+            ))
+          : forumsData.map((forum: any) => (
+              <CardForum
+                fullname={forum.author}
+                date={new Date(forum.created_at.seconds * 1000).toDateString()}
+                title={forum.title}
+                description={forum.description}
+                link={forum.id}
+                key={forum.id}
+              />
+            ))}
       </div>
     </div>
   );

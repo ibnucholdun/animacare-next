@@ -6,7 +6,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const data = await retriveData("forum");
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Get Product Success",
+      data,
+    });
+  } else if (req.method === "POST") {
     const token = req.headers.authorization?.split(" ")[1] || "";
     jwt.verify(
       token,

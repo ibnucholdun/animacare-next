@@ -5,6 +5,7 @@ const forumServices = {
     instance.post("/api/forum", data, {
       headers: { Authorization: `Bearer ${token}` },
     }),
+  getAllForum: () => instance.get("/api/forum"),
 };
 
 export default forumServices;
