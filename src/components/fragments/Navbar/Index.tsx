@@ -1,12 +1,18 @@
 import Button from "@/components/ui/Button";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/router";
 
 type Props = {};
 
+const activeNavbar = ["artikel"];
 const Navbar = (props: Props) => {
   const { data } = useSession();
+  const { pathname } = useRouter();
+  const activeNavigation: any = activeNavbar.includes(pathname.split("/")[1]);
+
   return (
     <div className="flex md:flex-row justify-between items-center border-b-2 px-24">
       <div className="py-5 ">
@@ -20,10 +26,38 @@ const Navbar = (props: Props) => {
       </div>
       <nav className="">
         <ul className="flex flex-row gap-10 items-center">
-          <li className="font-md cursor-default">Beranda</li>
-          <li className="font-md cursor-default">Artikel</li>
-          <li className="font-md cursor-default">Forum</li>
-          <li className="font-md cursor-default">Belanja</li>
+          <Link
+            href="/"
+            className={`font-md cursor-default ${
+              pathname === "/" &&
+              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+            } hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight`}>
+            Beranda
+          </Link>
+          <Link
+            href="/artikel"
+            className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
+              activeNavigation &&
+              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+            }`}>
+            Artikel
+          </Link>
+          <Link
+            href="/forum"
+            className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
+              pathname === "/forum" &&
+              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+            }`}>
+            Forum
+          </Link>
+          <Link
+            href="/belanja"
+            className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
+              pathname === "/belanja" &&
+              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+            }`}>
+            Belanja
+          </Link>
           <Button
             type="button"
             className=" bg-blueLight px-4 text-white hover:bg-white hover:text-blueLight text-md"
