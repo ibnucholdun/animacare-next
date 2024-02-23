@@ -1,12 +1,49 @@
+import CardComment from "@/components/fragments/CardComment";
 import Button from "@/components/ui/Button";
+import commentServices from "@/services/comment";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 type Props = {
   detailForum: any;
   isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const DetailForumView: React.FC<Props> = ({ detailForum, isLoading }) => {
+const DetailForumView: React.FC<Props> = ({
+  detailForum,
+  isLoading,
+  setIsLoading,
+}) => {
+  const session: any = useSession();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    const form: any = event.target as HTMLFormElement;
+    const data = {
+      comment: form.comment.value,
+      author: session.data?.user?.fullname || "",
+    };
+
+    try {
+      const result = await commentServices.postComment(
+        data,
+        session?.data?.accessToken,
+        detailForum?.id
+      );
+      if (result.status === 200) {
+        setIsLoading(false);
+        form.reset();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="px-24 py-12 min-h-screen">
       <section className={`${isLoading ? "" : "animate-pulse"}`}>
@@ -58,46 +95,38 @@ const DetailForumView: React.FC<Props> = ({ detailForum, isLoading }) => {
       <section className="komentar">
         <div className="flex gap-3">
           <i className="bx bx-user-circle text-5xl text-blueLight"></i>
-          <textarea
-            name="comment"
-            id="comment"
-            cols={30}
-            rows={5}
-            placeholder="Tulis Komentar"
-            className="border border-blueLight p-4 w-full outline-none rounded-lg"></textarea>
-        </div>
-        <div className="flex justify-end">
-          <Button
-            type="button"
-            className="bg-blueLight text-white mt-6 px-6 text-lg outline-none">
-            Kirim
-          </Button>
+          <form action="" onSubmit={handleSubmit} className="w-full">
+            <textarea
+              name="comment"
+              id="comment"
+              cols={30}
+              rows={5}
+              placeholder="Tulis Komentar"
+              className="border border-blueLight p-4 w-full outline-none rounded-lg"></textarea>
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                className="bg-blueLight text-white mt-6 px-6 text-lg outline-none">
+                Kirim
+              </Button>
+            </div>
+          </form>
         </div>
         <div className="my-12">
-          <div className="flex gap-1 mb-6">
-            <i className="bx bx-user-circle text-4xl text-blueLight"></i>
-            <div className="border border-slate-200 p-4 w-full rounded-lg">
-              <div className="flex items-center gap-2">
-                <h2 className="text-md font-semibold text-slate-600">
-                  Ibnu Choldun •
-                </h2>
-                <p className="text-sm font-extralight">Thu Feb 22 2024</p>
-              </div>
-              <p className="text-xl  pt-4">Aku bisa</p>
-            </div>
-          </div>
-          <div className="flex gap-1 mb-6">
-            <i className="bx bx-user-circle text-4xl text-blueLight"></i>
-            <div className="border border-slate-200 p-4 w-full rounded-lg">
-              <div className="flex items-center gap-2">
-                <h2 className="text-md font-semibold text-slate-600">
-                  Ibnu Choldun •
-                </h2>
-                <p className="text-sm font-extralight">Thu Feb 22 2024</p>
-              </div>
-              <p className="text-xl  pt-4">Aku bisa</p>
-            </div>
-          </div>
+          {detailForum?.comments
+            ?.sort(
+              (a: any, b: any) => b.created_at?.seconds - a.created_at?.seconds
+            )
+            .map((comment: any) => (
+              <CardComment
+                name={comment.author}
+                date={new Date(
+                  comment.created_at?.seconds * 1000
+                ).toDateString()}
+                comment={comment.comment}
+                key={comment.id}
+              />
+            ))}
         </div>
       </section>
     </div>

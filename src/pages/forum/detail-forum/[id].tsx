@@ -24,7 +24,11 @@ const DetailForum = (props: Props) => {
   }, [query.id]);
   return (
     <>
-      <DetailForumView detailForum={DetailForum} isLoading={isLoading} />
+      <DetailForumView
+        detailForum={DetailForum}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
     </>
   );
 };

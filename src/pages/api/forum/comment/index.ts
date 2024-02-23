@@ -1,20 +1,12 @@
 import jwt from "jsonwebtoken";
-import { addData, retriveData } from "@/lib/firebase/services";
+import { addData, retriveDataById } from "@/lib/firebase/services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "GET") {
-    const data = await retriveData("forums");
-    res.status(200).json({
-      success: true,
-      statusCode: 200,
-      message: "Get Product Success",
-      data,
-    });
-  } else if (req.method === "POST") {
+  if (req.method === "POST") {
     const token = req.headers.authorization?.split(" ")[1] || "";
     jwt.verify(
       token,
@@ -25,7 +17,8 @@ export default async function handler(
           data.created_at = new Date();
           data.updated_at = new Date();
           data.user_id = decoded.id;
-          await addData("forums", data, (status: boolean, result: any) => {
+          data.forum_id = req.query.id;
+          await addData("comment", data, (status: boolean, result: any) => {
             if (status) {
               res.status(200).json({
                 status: true,

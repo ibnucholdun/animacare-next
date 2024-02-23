@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { addData, retriveData } from "@/lib/firebase/services";
+import { retriveDataById, addData } from "@/lib/firebase/services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -7,14 +7,20 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const data = await retriveData("forums");
+    const { id }: any = req.query;
+    const data = await retriveDataById("forums", id[0]);
     res.status(200).json({
       success: true,
       statusCode: 200,
       message: "Get Product Success",
-      data,
+      data: {
+        ...data,
+        id: id[0],
+      },
     });
   } else if (req.method === "POST") {
+    // COMMENT
+    const { id }: any = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
     jwt.verify(
       token,
@@ -25,12 +31,13 @@ export default async function handler(
           data.created_at = new Date();
           data.updated_at = new Date();
           data.user_id = decoded.id;
-          await addData("forums", data, (status: boolean, result: any) => {
+          data.forum_id = id[0];
+          await addData("comments", data, (status: boolean, result: any) => {
             if (status) {
               res.status(200).json({
                 status: true,
                 statusCode: 200,
-                message: "Success",
+                message: "Comment Success",
                 data: {
                   id: result.id,
                 },
@@ -39,7 +46,7 @@ export default async function handler(
               res.status(404).json({
                 status: false,
                 statusCode: 404,
-                message: "Failed",
+                message: "Comment Failed",
                 data: {},
               });
             }
