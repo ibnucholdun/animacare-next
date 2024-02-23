@@ -5,18 +5,28 @@ import React, { useEffect, useState } from "react";
 type Props = {};
 
 const ForumPage = (props: Props) => {
-  const [forum, setForum] = useState([]);
+  const [searchData, setSearchData] = useState<any>(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const getAllForums = async () => {
-    const { data } = await forumServices.getAllForum();
-    setForum(data.data);
+  const getSearchForum = async (value: string) => {
+    const { data } = await forumServices.getSearchForum(value);
+    setSearchData(data.data);
   };
+
   useEffect(() => {
-    getAllForums();
-  }, []);
+    getSearchForum(searchValue);
+    setIsLoading(false);
+  }, [searchValue]);
+
   return (
     <>
-      <ForumView forum={forum} />
+      <ForumView
+        isLoading={isLoading}
+        searchData={searchData}
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
+      />
     </>
   );
 };

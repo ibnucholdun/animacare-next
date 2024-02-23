@@ -5,17 +5,21 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 type Props = {
-  forum: any;
+  searchData: any;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  searchValue: string;
+  isLoading: boolean;
 };
 
-const ForumView: React.FC<Props> = ({ forum }) => {
-  const [forumsData, setForumsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setForumsData(forum);
-    setIsLoading(false);
-  }, [forum]);
+const ForumView: React.FC<Props> = ({
+  searchData,
+  setSearchValue,
+  searchValue,
+  isLoading,
+}) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
 
   return (
     <div className="mx-24 my-12 min-h-screen">
@@ -27,26 +31,38 @@ const ForumView: React.FC<Props> = ({ forum }) => {
           <input
             type="search"
             placeholder="Cari Artikel"
+            value={searchValue}
+            onChange={handleChange}
             className="w-full border-2 outline-none border-blueLight rounded-full px-4 py-2"
           />
           <i className="bx bx-search text-blueLight text-3xl"></i>
         </div>
       </div>
       <div className="my-12">
-        {isLoading
-          ? Array.from({ length: 3 }).map((_, index) => (
-              <CardForumSkeleton key={index} />
-            ))
-          : forumsData.map((forum: any) => (
-              <CardForum
-                fullname={forum.author}
-                date={new Date(forum.created_at.seconds * 1000).toDateString()}
-                title={forum.title}
-                description={forum.description}
-                link={forum.id}
-                key={forum.id}
-              />
-            ))}
+        {searchData !== null && searchData.length > 0 ? (
+          searchData.map((forum: any) => (
+            <CardForum
+              fullname={forum.author}
+              date={new Date(forum.created_at.seconds * 1000).toDateString()}
+              title={forum.title}
+              description={forum.description}
+              link={forum.id}
+              key={forum.id}
+            />
+          ))
+        ) : (
+          <h1
+            className={`${
+              searchData === null ? "hidden" : "text-2xl text-center"
+            }`}>
+            Tidak ada data
+          </h1>
+        )}
+
+        {isLoading &&
+          Array.from({ length: 3 }).map((_, index) => (
+            <CardForumSkeleton key={index} />
+          ))}
       </div>
     </div>
   );
