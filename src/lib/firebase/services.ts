@@ -36,6 +36,8 @@ export const retriveDataById = async (collectionName: string, id: string) => {
     data.comments = getComments;
     return data;
   }
+
+  return data;
 };
 
 export const retriveDataByField = async (

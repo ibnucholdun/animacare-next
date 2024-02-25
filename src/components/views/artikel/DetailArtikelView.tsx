@@ -2,9 +2,11 @@ import Button from "@/components/ui/Button";
 import Image from "next/image";
 import React, { useState } from "react";
 
-type Props = {};
+type Props = {
+  detailArticle: any;
+};
 
-const DetailArtikelView = (props: Props) => {
+const DetailArtikelView: React.FC<Props> = ({ detailArticle }) => {
   const [favoite, setFavorite] = useState(false);
   return (
     <div className="px-24 w-full">
@@ -22,19 +24,20 @@ const DetailArtikelView = (props: Props) => {
         </button>
       </h3>
       <section className="w-full">
-        <h1 className="text-3xl font-semibold">
-          Selain Wortel, Kenali Jenis Makanan yang Aman Dikonsumsi Kelinci
-        </h1>
+        <h1 className="text-3xl font-semibold">{detailArticle?.title}</h1>
         <div className="w-full flex justify-center">
           <Image
-            src="/artikel1.png"
-            alt="Artikel"
+            src={detailArticle?.image}
+            alt={detailArticle?.title}
             width={1000}
             height={1000}
             className="w-[700px] my-6 object-contain"
           />
         </div>
-        <p className="my-6">test</p>
+        <div
+          className="my-6"
+          dangerouslySetInnerHTML={{ __html: detailArticle?.description }}
+        />
       </section>
     </div>
   );
