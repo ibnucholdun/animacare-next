@@ -22,9 +22,9 @@ const CardArtikel: React.FC<Props> = ({ image, title, description, link }) => {
         />
       </div>
       <h2 className="text-xl font-semibold">{title}</h2>
-      <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-        {description}
-      </p>
+      <p
+        className="text-sm font-normal text-gray500 my-2 line-clamp-3"
+        dangerouslySetInnerHTML={{ __html: description }}></p>
       <Link
         href={link}
         className="text-blueLight text-base font-medium underline">
