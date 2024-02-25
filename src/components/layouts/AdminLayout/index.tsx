@@ -4,25 +4,14 @@ type Props = {
   children: React.ReactNode;
 };
 
-const listSidebarItem = [
-  {
-    title: "Dashboard",
-    url: "/admin",
-    icon: "bxs-dashboard",
-  },
-  {
-    title: "Articles",
-    url: "/admin/articles",
-    icon: "bxs-book",
-  },
-];
-
 const AdminLayout = (props: Props) => {
   const { children } = props;
   return (
-    <div className="">
-      <Sidebar lists={listSidebarItem} />
-      {children}
+    <div className="flex">
+      <div className="w-[250px]">
+        <Sidebar />
+      </div>
+      <div className="w-full">{children}</div>
     </div>
   );
 };
