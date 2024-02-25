@@ -74,12 +74,15 @@ const PostArtikelView = (props: Props) => {
               session?.data?.accessToken
             );
 
-            console.log(result);
-
             if (result.status === 200) {
               setIsLoading(false);
               setChangeImage(null);
               form.reset();
+              const { data } = await articleServices.getArticles();
+
+              if (data) {
+                router.push("/admin/articles");
+              }
             } else {
               setIsLoading(false);
               console.log("Add Product Failed");
@@ -110,7 +113,6 @@ const PostArtikelView = (props: Props) => {
     if (result.status === 200) {
       uploadImage(form, result.data.data.id);
       setIsLoading(true);
-      router.push("/admin/articles");
     } else {
       setIsLoading(false);
     }
@@ -123,7 +125,7 @@ const PostArtikelView = (props: Props) => {
 
   return (
     <AdminLayout>
-      <div className="px-20 my-12">
+      <div className="px-20 pt-12">
         <h1 className="text-3xl font-semibold mb-12">Post Artikel</h1>
         <form action="" className="w-9/12" onSubmit={handleSubmit}>
           <div className="flex flex-col my-[10px]">
