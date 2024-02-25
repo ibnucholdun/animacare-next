@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import Button from "@/components/ui/Button";
+import { uploadFile } from "@/lib/firebase/services";
+import articleServices from "@/services/articles";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -10,6 +14,10 @@ type Props = {};
 
 const PostArtikelView = (props: Props) => {
   const [content, setContent] = useState("");
+  const [changeImage, setChangeImage] = useState<File | null>(null);
+  const session: any = useSession();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const quillModules = {
     toolbar: [
@@ -42,32 +50,101 @@ const PostArtikelView = (props: Props) => {
 
   const handleEditorChange = (newContent: string) => {
     setContent(newContent);
-    console.log(newContent);
+  };
+
+  const uploadImage = async (form: any, id: string) => {
+    const file = form.image.files[0];
+    const newName = "article." + file.name.split(".")[1];
+
+    if (file) {
+      uploadFile(
+        id,
+        file,
+        newName,
+        "articles",
+        async (status: boolean, newImageUrl: string) => {
+          if (status) {
+            const data = {
+              image: newImageUrl,
+            };
+
+            const result = await articleServices.updateArticle(
+              id,
+              data,
+              session?.data?.accessToken
+            );
+
+            console.log(result);
+
+            if (result.status === 200) {
+              setIsLoading(false);
+              setChangeImage(null);
+              form.reset();
+            } else {
+              setIsLoading(false);
+              console.log("Add Product Failed");
+            }
+          } else {
+            setIsLoading(false);
+            console.log("Add Product Failed");
+          }
+        }
+      );
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form: any = e.target as HTMLFormElement;
+    const data = {
+      title: form.title.value,
+      description: content,
+      image: changeImage,
+    };
+
+    const result = await articleServices.postArticle(
+      data,
+      session?.data?.accessToken
+    );
+
+    if (result.status === 200) {
+      uploadImage(form, result.data.data.id);
+      setIsLoading(true);
+      router.push("/admin/articles");
+    } else {
+      setIsLoading(false);
+    }
+  };
+
+  const onChangeImage = (e: any) => {
+    e.preventDefault();
+    setChangeImage(e.currentTarget.files[0]);
   };
 
   return (
     <AdminLayout>
       <div className="px-20 my-12">
         <h1 className="text-3xl font-semibold mb-12">Post Artikel</h1>
-        <form action="" className="w-9/12">
+        <form action="" className="w-9/12" onSubmit={handleSubmit}>
           <div className="flex flex-col my-[10px]">
-            <label htmlFor="judul-artikel">Judul Artikel</label>
+            <label htmlFor="title">Judul Artikel</label>
             <input
               type="text"
-              name="judul-artikel"
-              id="judul-artikel"
+              name="title"
+              id="title"
               placeholder="Judul Artikel"
-              className="p-[10px] mt-[5px] border border-blueLight outline-none rounded text-sm w-full"
+              className="p-[10px] mt-[5px] border outline-none rounded text-sm w-full"
             />
           </div>
           <div className="flex flex-col my-[10px]">
-            <label htmlFor="gambar-artikel">Gambar Artikel</label>
+            <label htmlFor="image">Gambar Artikel</label>
             <input
               type="file"
-              name="gambar-artikel"
-              id="gambar-artikel"
+              name="image"
+              id="image"
               placeholder="Gambar Artikel"
               className="p-[10px] mt-[5px] outline-none rounded text-sm w-9/12"
+              onChange={onChangeImage}
             />
           </div>
           <div className="flex flex-col my-[10px]">
@@ -82,7 +159,7 @@ const PostArtikelView = (props: Props) => {
           </div>
           <div className="flex justify-end py-12">
             <Button type="submit" className="bg-blueLight text-white">
-              Submit
+              {isLoading ? "Loading" : "Simpan"}
             </Button>
           </div>
         </form>
