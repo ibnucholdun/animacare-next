@@ -5,10 +5,11 @@ type Props = {
   name: string;
   type: string;
   placehoder?: string;
+  classname?: string;
 };
 
 const Input = (props: Props) => {
-  const { label, name, type, placehoder } = props;
+  const { label, name, type, placehoder, classname } = props;
   return (
     <div className="flex flex-col my-[10px]">
       <label htmlFor={name} className="text-white">
@@ -19,7 +20,7 @@ const Input = (props: Props) => {
         name={name}
         id={name}
         placeholder={placehoder}
-        className="p-[10px] mt-[5px] border-none outline-none rounded text-sm"
+        className={`p-[10px] mt-[5px] border border-blueLight outline-none rounded text-sm ${classname}`}
       />
     </div>
   );

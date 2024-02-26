@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { loginWithGoogle, signIn } from "@/services/auth/services";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -39,8 +40,8 @@ const authOptions: NextAuthOptions = {
     }),
 
     Googleprovider({
-      clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || "",
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID || "",
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_SECRET || "",
     }),
   ],
   callbacks: {
@@ -50,6 +51,7 @@ const authOptions: NextAuthOptions = {
         token.fullname = user?.fullname;
         token.phone = user?.phone;
         token.role = user?.role;
+        token.id = user?.id;
       }
 
       if (account?.provider === "google") {
@@ -63,6 +65,7 @@ const authOptions: NextAuthOptions = {
           token.email = data?.email;
           token.fullname = data?.fullname;
           token.role = data?.role;
+          token.id = user?.id;
         });
       }
       return token;
@@ -81,6 +84,17 @@ const authOptions: NextAuthOptions = {
       if ("role" in token) {
         session.user.role = token.role;
       }
+
+      if ("id" in token) {
+        session.user.id = token.id;
+      }
+
+      const accessToken = jwt.sign(token, process.env.NEXTAUTH_SECRET || "", {
+        algorithm: "HS256",
+      });
+
+      session.accessToken = accessToken;
+
       return session;
     },
   },

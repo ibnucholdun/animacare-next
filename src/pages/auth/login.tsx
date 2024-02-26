@@ -1,4 +1,4 @@
-import LoginView from "@/components/views/Login/Index";
+import LoginView from "@/components/views/auth/Login/Index";
 import React from "react";
 
 type Props = {};
