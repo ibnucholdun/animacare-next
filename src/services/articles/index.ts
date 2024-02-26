@@ -17,6 +17,8 @@ const articleServices = {
         },
       }
     ),
+  getSearchArticle: (value: string) =>
+    instance.get(`/api/article?search=${value}`),
 };
 
 export default articleServices;

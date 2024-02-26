@@ -111,14 +111,6 @@ const ArtikelLayout: React.FC<Props> = ({ children }) => {
             </div>
           </nav>
         </section>
-        <div className=" flex gap-3 items-center mb-12">
-          <input
-            type="search"
-            placeholder="Cari Artikel"
-            className="w-full border-2 outline-none border-blueLight rounded-full px-4 py-2"
-          />
-          <i className="bx bx-search text-blueLight text-3xl"></i>
-        </div>
         {children}
       </div>
     </>

@@ -6,18 +6,27 @@ type Props = {};
 
 const ArtikelPage = (props: Props) => {
   const [articles, setArticles] = useState<any[]>([]);
+  const [searchData, setSearchData] = useState<any>(null);
+  const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getSearchArticle = async (value: string) => {
+    const { data } = await articleServices.getSearchArticle(value);
+    setSearchData(data.data);
+  };
 
   useEffect(() => {
-    const getAllArticles = async () => {
-      const { data } = await articleServices.getArticles();
-      setArticles(data.data);
-    };
-
-    getAllArticles();
-  }, []);
+    getSearchArticle(searchValue);
+    setIsLoading(false);
+  }, [searchValue]);
   return (
     <>
-      <ArtikelView articles={articles} />
+      <ArtikelView
+        isLoading={isLoading}
+        searchData={searchData}
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
+      />
     </>
   );
 };

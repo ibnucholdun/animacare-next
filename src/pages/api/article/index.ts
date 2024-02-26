@@ -8,10 +8,28 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const data = await retriveData("articles");
+
+    const search = req.query.search as string;
+    if (search) {
+      const filteredData = data.filter((item: any) => {
+        return (
+          item.title.toLowerCase().includes(search.toLowerCase()) ||
+          item.description.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+
+      res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Get Articles Success",
+        data: filteredData,
+      });
+    }
+
     res.status(200).json({
       success: true,
       statusCode: 200,
-      message: "Get Product Success",
+      message: "Get Articles Success",
       data,
     });
   } else if (req.method === "POST") {
