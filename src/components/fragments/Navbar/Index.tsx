@@ -90,7 +90,7 @@ const Navbar = (props: Props) => {
                 )}
               </Button>
               {isMenuOpen && (
-                <div className={`absolute top-16 right-[70px]`}>
+                <div className={`absolute top-16 right-[70px] z-50`}>
                   <div className="w-[160px] h-[100px] bg-blueLight flex flex-col items-start justify-center rounded-lg border text-white">
                     <Link
                       href={"/member/profile"}

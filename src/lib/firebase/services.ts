@@ -7,8 +7,10 @@ import {
 import app from "./init";
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -34,6 +36,16 @@ export const retriveDataById = async (collectionName: string, id: string) => {
   if (data && collectionName === "forums") {
     const getComments = await retriveDataByField("comments", "forum_id", id);
     data.comments = getComments;
+    return data;
+  }
+
+  if (data && collectionName === "users") {
+    const getFavorites = await retriveDataByField(
+      "favorite_articles",
+      "user_id",
+      id
+    );
+    data.favorite_articles = getFavorites;
     return data;
   }
 
@@ -85,9 +97,40 @@ export const addData = async (
       });
     }
 
+    if (collectionName === "favorite_articles" && data.user_id) {
+      const userDocRef = doc(firestore, "users", data.user_id);
+      await updateDoc(userDocRef, {
+        favorite_articles: arrayUnion(docRef.id),
+      });
+    }
+
     callback(true, docRef);
   } catch (error) {
     console.error("Error adding document: ", error);
+    callback(false);
+  }
+};
+
+export const deleteData = async (
+  collectionName: string,
+  data: any,
+  callback: Function
+) => {
+  try {
+    const docRef = doc(firestore, collectionName, data.id);
+    await deleteDoc(docRef);
+
+    if (collectionName === "favorite_articles" && data.user_id) {
+      const userDocRef = doc(firestore, "users", data.user_id);
+
+      await updateDoc(userDocRef, {
+        favorite_articles: arrayRemove(data.id),
+      });
+    }
+
+    callback(true);
+  } catch (error) {
+    console.error("Error deleting document: ", error);
     callback(false);
   }
 };

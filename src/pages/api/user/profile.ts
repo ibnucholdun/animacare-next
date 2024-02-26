@@ -16,8 +16,8 @@ export default async function handler(
         async (err: any, decoded: any) => {
           if (decoded) {
             const profile: any = await retriveDataById("users", decoded.id);
+            profile.id = decoded?.id;
             if (profile) {
-              profile.id = decoded.id;
               res.status(200).json({
                 success: true,
                 statusCode: 200,

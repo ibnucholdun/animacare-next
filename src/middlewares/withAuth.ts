@@ -15,6 +15,20 @@ export default function WithAuth(
 ) {
   return async (req: NextRequest, next: NextFetchEvent) => {
     const pathname = req.nextUrl.pathname.split("/")[1];
+
+    if (pathname === "artikel" && req.nextUrl.pathname.includes("/favorite")) {
+      const token = await getToken({
+        req,
+        secret: process.env.NEXTAUTH_SECRET,
+      });
+
+      if (!token) {
+        const url = new URL("/auth/login", req.url);
+        url.searchParams.set("callbackUrl", req.url);
+        return NextResponse.redirect(url);
+      }
+    }
+
     if (requireAuth.includes(pathname)) {
       const token = await getToken({
         req,
