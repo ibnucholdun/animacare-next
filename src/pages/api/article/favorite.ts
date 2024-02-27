@@ -13,7 +13,34 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    jwt.verify(
+      token,
+      process.env.NEXTAUTH_SECRET || "",
+      async (err: any, decoded: any) => {
+        if (decoded) {
+          const favoriteUserId = await retriveDataByField(
+            "favorite_articles",
+            "user_id",
+            decoded.id
+          );
+
+          const checkUser = favoriteUserId.filter(
+            (item: any) => item.user_id === decoded.id
+          );
+          if (checkUser.length > 0) {
+            res.status(200).json({
+              status: true,
+              statusCode: 200,
+              message: "Get Favorite Success",
+              data: checkUser,
+            });
+          }
+        }
+      }
+    );
+  } else if (req.method === "POST") {
     const token = req.headers.authorization?.split(" ")[1] || "";
     jwt.verify(
       token,
@@ -119,3 +146,9 @@ export default async function handler(
     );
   }
 }
+
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};

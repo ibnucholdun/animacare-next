@@ -11,6 +11,11 @@ const favoriteArtikel = {
       headers: { Authorization: `Bearer ${token}` },
       data: { data },
     }),
+
+  getAllFavoriteArtikel: (token: string) =>
+    instance.get(`/api/article/favorite`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
 };
 
 export default favoriteArtikel;

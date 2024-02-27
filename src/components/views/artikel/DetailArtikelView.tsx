@@ -1,5 +1,6 @@
 import favoriteArtikel from "@/services/favoritesArticle";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 type Props = {
@@ -13,14 +14,19 @@ const DetailArtikelView: React.FC<Props> = ({
   session,
   profile,
 }) => {
+  const { query } = useRouter();
   const getFavoriteFavorite = profile?.favorite_articles?.find(
-    (item: any) => item.article_id === detailArticle?.id
+    (item: any) => item.article_id === query.id
   );
 
   const handleButtonFavorite = async (e: any) => {
     e.preventDefault();
+
     const data = {
-      article_id: detailArticle?.id,
+      title: detailArticle?.title,
+      description: detailArticle?.description,
+      image: detailArticle?.image,
+      article_id: query.id,
       isFavorite: true,
     };
     try {
@@ -40,7 +46,7 @@ const DetailArtikelView: React.FC<Props> = ({
   const handleDeleteFavorite = async (e: any) => {
     e.preventDefault();
     const data = {
-      article_id: detailArticle?.id,
+      article_id: query.id,
     };
     try {
       const result = await favoriteArtikel.deleteFavoriteArtikel(
@@ -61,19 +67,16 @@ const DetailArtikelView: React.FC<Props> = ({
       <h3 className="text-xl font-semibold text-blueLight flex items-center justify-end my-6">
         <form
           onSubmit={
-            getFavoriteFavorite?.isFavorite === false ||
-            getFavoriteFavorite === undefined
+            !getFavoriteFavorite?.isFavorite
               ? handleButtonFavorite
               : handleDeleteFavorite
           }
           className="flex items-center">
-          {getFavoriteFavorite?.isFavorite === false ||
-          getFavoriteFavorite === undefined
+          {!getFavoriteFavorite?.isFavorite
             ? "Tandai Sebagai Favorite "
             : "Hapus Dari Favorite"}
           <button type="submit" className="p-2">
-            {getFavoriteFavorite?.isFavorite === false ||
-            getFavoriteFavorite === undefined ? (
+            {!getFavoriteFavorite?.isFavorite ? (
               <i className="bx bxs-toggle-left text-5xl"></i>
             ) : (
               <i className="bx bxs-toggle-right text-5xl"></i>
