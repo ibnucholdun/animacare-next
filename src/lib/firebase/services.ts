@@ -103,7 +103,6 @@ export const addData = async (
         favorite_articles: arrayUnion(docRef.id),
       });
     }
-
     callback(true, docRef);
   } catch (error) {
     console.error("Error adding document: ", error);
@@ -113,18 +112,18 @@ export const addData = async (
 
 export const deleteData = async (
   collectionName: string,
-  data: any,
+  id: any,
+  decoded: any,
   callback: Function
 ) => {
   try {
-    const docRef = doc(firestore, collectionName, data.id);
+    const docRef = doc(firestore, collectionName, id);
     await deleteDoc(docRef);
 
-    if (collectionName === "favorite_articles" && data.user_id) {
-      const userDocRef = doc(firestore, "users", data.user_id);
-
+    if (collectionName === "favorite_articles" && decoded) {
+      const userDocRef = doc(firestore, "users", decoded);
       await updateDoc(userDocRef, {
-        favorite_articles: arrayRemove(data.id),
+        favorite_articles: arrayRemove(id),
       });
     }
 

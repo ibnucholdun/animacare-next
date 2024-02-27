@@ -1,6 +1,6 @@
 import favoriteArtikel from "@/services/favoritesArticle";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   detailArticle: any;
@@ -10,69 +10,70 @@ type Props = {
 
 const DetailArtikelView: React.FC<Props> = ({
   detailArticle,
-  profile,
   session,
+  profile,
 }) => {
-  const [favorite, setFavorite] = useState(false);
+  const getFavoriteFavorite = profile?.favorite_articles?.find(
+    (item: any) => item.article_id === detailArticle?.id
+  );
 
-  const getFavoriteId = profile?.favorite_articles?.find((item: any) => {
-    if (item.article_id === detailArticle?.id) {
-      console.log(item.id);
-      return item.id;
-    }
-  });
-
-  console.log(profile);
   const handleButtonFavorite = async (e: any) => {
     e.preventDefault();
     const data = {
       article_id: detailArticle?.id,
+      isFavorite: true,
     };
     try {
-      if (favorite) {
-        const result = await favoriteArtikel.postFavoriteArtikel(
-          data,
-          session.data?.accessToken,
-          detailArticle?.id
-        );
+      const result = await favoriteArtikel.postFavoriteArtikel(
+        data,
+        session.data?.accessToken
+      );
 
-        if (result.status === 200) {
-          setFavorite(!favorite); //true
-          console.log("success");
-        } else {
-          console.log("failed");
-        }
-      } else if (!favorite) {
-        const data = {
-          id: getFavoriteId.id,
-          user_id: profile.id,
-        };
-        const result = await favoriteArtikel.deleteFavoriteArtikel(
-          data,
-          session?.data?.accessToken,
-          detailArticle?.id
-        );
-        if (result.status === 200) {
-          setFavorite(!favorite); //false
-          console.log("success");
-        } else {
-          console.log("failed");
-        }
+      if (result.status === 200) {
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleDeleteFavorite = async (e: any) => {
+    e.preventDefault();
+    const data = {
+      article_id: detailArticle?.id,
+    };
+    try {
+      const result = await favoriteArtikel.deleteFavoriteArtikel(
+        data,
+        session?.data?.accessToken
+      );
+
+      if (result.status === 200) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="px-24 w-full">
       <h3 className="text-xl font-semibold text-blueLight flex items-center justify-end my-6">
         <form
-          action=""
-          onSubmit={handleButtonFavorite}
+          onSubmit={
+            getFavoriteFavorite?.isFavorite === false ||
+            getFavoriteFavorite === undefined
+              ? handleButtonFavorite
+              : handleDeleteFavorite
+          }
           className="flex items-center">
-          {favorite ? "Tandai Sebagai Favorite" : "Hapus Dari Favorite"}
+          {getFavoriteFavorite?.isFavorite === false ||
+          getFavoriteFavorite === undefined
+            ? "Tandai Sebagai Favorite "
+            : "Hapus Dari Favorite"}
           <button type="submit" className="p-2">
-            {favorite ? (
+            {getFavoriteFavorite?.isFavorite === false ||
+            getFavoriteFavorite === undefined ? (
               <i className="bx bxs-toggle-left text-5xl"></i>
             ) : (
               <i className="bx bxs-toggle-right text-5xl"></i>
