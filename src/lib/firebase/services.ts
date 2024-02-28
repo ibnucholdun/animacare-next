@@ -113,8 +113,8 @@ export const addData = async (
 export const deleteData = async (
   collectionName: string,
   id: any,
-  decoded: any,
-  callback: Function
+  callback: Function,
+  decoded?: string
 ) => {
   try {
     const docRef = doc(firestore, collectionName, id);

@@ -2,6 +2,7 @@ import AdminLayout from "@/components/layouts/AdminLayout";
 import Button from "@/components/ui/Button";
 import React, { useEffect, useState } from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalDeleteUser from "./ModalDeleteUser";
 
 type Props = {
   users: any;
@@ -66,6 +67,13 @@ const AdminUserView: React.FC<Props> = ({ users }) => {
         <ModalUpdateUser
           modalUpdateUser={updatedUser}
           setModalUpdateUser={setUpdatedUser}
+          setUsersData={setUsersData}
+        />
+      )}
+      {Object.keys(deletedUser).length && (
+        <ModalDeleteUser
+          modalDeletedUser={deletedUser}
+          setModalDeletedUser={setDeletedUser}
           setUsersData={setUsersData}
         />
       )}

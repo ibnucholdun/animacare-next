@@ -1,4 +1,4 @@
-import { retriveData, updateData } from "@/lib/firebase/services";
+import { deleteData, retriveData, updateData } from "@/lib/firebase/services";
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 
@@ -38,6 +38,38 @@ export default async function handler(
                 success: false,
                 statusCode: 400,
                 message: "Update User Failed",
+              });
+            }
+          });
+        } else {
+          res.status(403).json({
+            success: false,
+            statusCode: 403,
+            message: "Unauthorized",
+          });
+        }
+      }
+    );
+  } else if (req.method === "DELETE") {
+    const { id } = req.body;
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    jwt.verify(
+      token,
+      process.env.NEXTAUTH_SECRET || "",
+      async (err: any, decoded: any) => {
+        if (decoded && decoded.role === "admin") {
+          await deleteData("users", id, (result: boolean) => {
+            if (result) {
+              res.status(200).json({
+                success: true,
+                statusCode: 200,
+                message: "Delete User Success",
+              });
+            } else {
+              res.status(400).json({
+                success: false,
+                statusCode: 400,
+                message: "Delete User Failed",
               });
             }
           });
