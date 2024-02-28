@@ -1,4 +1,3 @@
-import AdminLayout from "@/components/layouts/AdminLayout";
 import AdminUserView from "@/components/views/admin/Users";
 import userServices from "@/services/users";
 import React, { useEffect, useState } from "react";
@@ -17,9 +16,7 @@ const AdminUserPage = (props: Props) => {
   }, []);
   return (
     <>
-      <AdminLayout>
-        <AdminUserView users={users} />
-      </AdminLayout>
+      <AdminUserView users={users} />
     </>
   );
 };
