@@ -9,6 +9,7 @@ type Props = {};
 
 const activeArtikel = ["artikel"];
 const activeForum = ["forum"];
+const activeBelanja = ["belanja"];
 
 const Navbar = (props: Props) => {
   const { data }: any = useSession();
@@ -70,7 +71,7 @@ const Navbar = (props: Props) => {
           <Link
             href="/belanja"
             className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
-              pathname === "/belanja" &&
+              activeBelanja.includes(pathname.split("/")[1]) &&
               "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
             }`}>
             Belanja
@@ -81,7 +82,13 @@ const Navbar = (props: Props) => {
                 type="button"
                 className="flex flex-row gap-2 items-center justify-center outline-none"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                <i className="bx bx-user text-xl"></i>
+                <Image
+                  src={data?.user?.image}
+                  alt={data?.user?.fullname}
+                  width={40}
+                  height={0}
+                  className="w-[30px] h-[30px] object-cover rounded-full"
+                />
                 <p className="text-[16px]">{data?.user?.fullname}</p>
                 {isMenuOpen ? (
                   <i className="bx bx-chevron-up text-xl"></i>

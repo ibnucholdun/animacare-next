@@ -31,33 +31,6 @@ const ArticlesAdminView: React.FC<Props> = ({ articles }) => {
               <th className="w-[200px] border-2">Action</th>
             </tr>
           </thead>
-          {/* <tbody>
-            <tr className="text-center">
-              <td className="border-2">1</td>
-              <td className="border-2">1</td>
-              <td className="border-2">1</td>
-              <td className="border-2">
-                <div className="flex justify-center gap-2 p-2">
-                  <Button
-                    type="button"
-                    className="cursor-pointer bg-[#3C3CF4] p-4 outline-none">
-                    <i className="bx bxs-edit text-xl text-white" />
-                  </Button>
-                  <Button
-                    type="button"
-                    className="cursor-pointer bg-[#FF0000] p-4 outline-none">
-                    <i className="bx bx-trash text-xl text-white" />
-                  </Button>
-                </div>
-              </td>
-            </tr>
-            <tr className="text-center">
-              <td className="border-2">1</td>
-              <td className="border-2">1</td>
-              <td className="border-2">1</td>
-              <td className="border-2">1</td>
-            </tr>
-          </tbody> */}
           <tbody>
             {articles.map((article: any, index: number) => (
               <tr className="text-center" key={index}>
@@ -77,6 +50,11 @@ const ArticlesAdminView: React.FC<Props> = ({ articles }) => {
                   <div className="flex justify-center gap-2 p-2">
                     <Button
                       type="button"
+                      onClick={() =>
+                        router.push(
+                          `/admin/articles/edit-article/${article.id}`
+                        )
+                      }
                       className="cursor-pointer bg-[#3C3CF4] p-4 outline-none">
                       <i className="bx bxs-edit text-xl text-white" />
                     </Button>
