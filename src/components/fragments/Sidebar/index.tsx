@@ -17,6 +17,11 @@ const listSidebarItem = [
     url: "/admin/articles",
     icon: "bxs-book",
   },
+  {
+    title: "Users",
+    url: "/admin/users",
+    icon: "bxs-group",
+  },
 ];
 
 const activeNavbarArticle = ["articles"];

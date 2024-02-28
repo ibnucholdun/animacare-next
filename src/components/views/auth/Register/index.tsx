@@ -26,15 +26,20 @@ const RegisterView = (props: Props) => {
       password: form.password.value,
     };
 
-    const result = await authServices.registerAccount(data);
+    try {
+      const result = await authServices.registerAccount(data);
 
-    if (result.status === 200) {
+      if (result.status === 200) {
+        setIsLoading(false);
+        form.reset();
+        push("/auth/login");
+      } else {
+        setIsLoading(false);
+        setError("Email already exists");
+      }
+    } catch (error) {
       setIsLoading(false);
-      form.reset();
-      push("/auth/login");
-    } else {
-      setIsLoading(false);
-      setError("Email already exists");
+      setError("Something went wrong");
     }
   };
 

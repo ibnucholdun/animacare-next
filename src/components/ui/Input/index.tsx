@@ -6,13 +6,26 @@ type Props = {
   type: string;
   placehoder?: string;
   classname?: string;
+  value?: string;
+  disabled?: boolean;
+  variant?: string;
+  defaultValue?: string;
 };
 
 const Input = (props: Props) => {
-  const { label, name, type, placehoder, classname } = props;
+  const {
+    label,
+    name,
+    type,
+    placehoder,
+    classname,
+    disabled,
+    variant = "text-white",
+    defaultValue,
+  } = props;
   return (
     <div className="flex flex-col my-[10px]">
-      <label htmlFor={name} className="text-white">
+      <label htmlFor={name} className={variant}>
         {label}
       </label>
       <input
@@ -20,7 +33,11 @@ const Input = (props: Props) => {
         name={name}
         id={name}
         placeholder={placehoder}
-        className={`p-[10px] mt-[5px] border border-blueLight outline-none rounded text-sm ${classname}`}
+        disabled={disabled}
+        defaultValue={defaultValue}
+        className={`p-[10px] mt-[5px] outline-none rounded text-sm ${classname} ${
+          disabled ? "" : "border border-blueLight"
+        }`}
       />
     </div>
   );
