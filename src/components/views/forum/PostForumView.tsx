@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { capitalizeWord } from "@/utils/capitalWord";
 
 type Props = {};
 
@@ -12,7 +13,12 @@ const PostForumView = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const session: any = useSession();
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+  });
 
+  const [inputValue, setInputValue] = useState("");
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
@@ -22,6 +28,7 @@ const PostForumView = (props: Props) => {
       title: form.title.value,
       description: form.description.value,
       author: session.data?.user?.fullname || "",
+      profileImage: session.data?.user?.image || "",
     };
     try {
       const result = await forumServices.postForum(
@@ -61,6 +68,13 @@ const PostForumView = (props: Props) => {
               id="description"
               cols={30}
               rows={10}
+              value={formData.description}
+              onChange={(e: any) =>
+                setFormData({
+                  ...formData,
+                  description: capitalizeWord(e.target.value) || "",
+                })
+              }
             />
             <div className="w-3/4 flex justify-end">
               <Button

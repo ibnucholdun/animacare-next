@@ -1,8 +1,7 @@
 import CardForum from "@/components/fragments/CardForum";
 import CardForumSkeleton from "@/components/fragments/CardForumSkeleton";
-import forumServices from "@/services/forum";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 type Props = {
   searchData: any;
@@ -40,16 +39,21 @@ const ForumView: React.FC<Props> = ({
       </div>
       <div className="my-12">
         {searchData !== null && searchData.length > 0 ? (
-          searchData.map((forum: any) => (
-            <CardForum
-              fullname={forum.author}
-              date={new Date(forum.created_at.seconds * 1000).toDateString()}
-              title={forum.title}
-              description={forum.description}
-              link={forum.id}
-              key={forum.id}
-            />
-          ))
+          searchData
+            .sort(
+              (a: any, b: any) => b.created_at.seconds - a.created_at.seconds
+            )
+            .map((forum: any) => (
+              <CardForum
+                fullname={forum.author}
+                date={new Date(forum.created_at.seconds * 1000).toDateString()}
+                title={forum.title}
+                description={forum.description}
+                image={forum.profileImage}
+                link={forum.id}
+                key={forum.id}
+              />
+            ))
         ) : (
           <h1
             className={`${

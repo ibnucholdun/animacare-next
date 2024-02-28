@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -7,11 +8,13 @@ type Props = {
   title: string;
   description: string;
   link: string;
+  image: string;
 };
 
 const CardForum: React.FC<Props> = ({
   fullname,
   date,
+  image,
   title,
   description,
   link,
@@ -20,7 +23,13 @@ const CardForum: React.FC<Props> = ({
     <div className="flex flex-col gap-2 mb-6">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-medium flex items-center gap-1">
-          <i className="bx bx-user-circle text-4xl text-blueLight"></i>
+          <Image
+            src={image}
+            alt={fullname}
+            width={40}
+            height={0}
+            className="w-[30px] h-[30px] object-cover rounded-full"
+          />
           {fullname}
         </h1>
         <p className="text-sm">{date}</p>
