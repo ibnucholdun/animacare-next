@@ -22,9 +22,15 @@ const listSidebarItem = [
     url: "/admin/users",
     icon: "bxs-group",
   },
+  {
+    title: "Products",
+    url: "/admin/products",
+    icon: "bxs-cart",
+  },
 ];
 
 const activeNavbarArticle = ["articles"];
+const activeNavbarProduct = ["products"];
 const activeStyle = "bg-white text-blueLight duration-[0.3s] rounded-lg";
 
 const Sidebar = (props: Props) => {
@@ -39,11 +45,17 @@ const Sidebar = (props: Props) => {
               href={list.url}
               className={`text-sm flex items-center gap-2 duration-[0.3s] py-2 px-3 rounded-lg hover:bg-white hover:text-blueLight hover:duration-[0.3s] hover:rounded:lg ${
                 pathname === list.url && activeStyle
-              } ${
+              }
+              ${
                 list.url === "/admin/articles" &&
                 activeNavbarArticle.includes(pathname.split("/")[2]) &&
                 activeStyle
-              }`}
+              }
+              ${
+                list.url === "/admin/products" &&
+                activeNavbarProduct.includes(pathname.split("/")[2]) &&
+                activeStyle
+              } `}
               key={list.title}>
               <i className={`bx ${list.icon} text-sm`} />
               <h4 className="text-sm">{list.title}</h4>
