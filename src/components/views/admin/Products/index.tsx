@@ -4,6 +4,7 @@ import { convertIDR } from "@/utils/convertIDR";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ModalAddProduct from "./ModalAddProduct";
+import ModalUpdateProduct from "./ModalUpdateProduct";
 
 type Props = {
   products: any;
@@ -12,7 +13,7 @@ type Props = {
 const ProductsAdminView: React.FC<Props> = ({ products }) => {
   const [productsData, setProductsData] = useState<any>([]);
   const [modalAddProduct, setModalAddProduct] = useState(false);
-
+  const [modalUpdateProduct, setModalUpdateProduct] = useState<any>({});
   useEffect(() => {
     setProductsData(products);
   }, [products]);
@@ -63,7 +64,8 @@ const ProductsAdminView: React.FC<Props> = ({ products }) => {
                     <div className="flex gap-2 justify-center">
                       <Button
                         type="button"
-                        className="cursor-pointer bg-[#3C3CF4] p-2 text-white">
+                        className="cursor-pointer bg-[#3C3CF4] p-2 text-white"
+                        onClick={() => setModalUpdateProduct(product)}>
                         <i className="bx bxs-edit text-xl" />
                       </Button>
                       <Button
@@ -82,6 +84,13 @@ const ProductsAdminView: React.FC<Props> = ({ products }) => {
       {modalAddProduct && (
         <ModalAddProduct
           setModalAddProduct={setModalAddProduct}
+          setProductsData={setProductsData}
+        />
+      )}
+      {Object.keys(modalUpdateProduct).length > 0 && (
+        <ModalUpdateProduct
+          setModalUpdateProduct={setModalUpdateProduct}
+          modalUpdateProduct={modalUpdateProduct}
           setProductsData={setProductsData}
         />
       )}

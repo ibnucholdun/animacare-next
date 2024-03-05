@@ -10,7 +10,7 @@ type Props = {
   value?: string;
   disabled?: boolean;
   variant?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   onChange?: any;
 };
 
