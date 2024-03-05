@@ -15,13 +15,13 @@ const userServices = {
         },
       }
     ),
-  //   deleteUser: (id: string, token: string) =>
-  //     instance.delete("/api/user", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       data: { id },
-  //     }),
+  deleteUser: (id: string, token: string) =>
+    instance.delete("/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { id },
+    }),
   getProfile: (token: string) =>
     instance.get("/api/user/profile", {
       headers: {

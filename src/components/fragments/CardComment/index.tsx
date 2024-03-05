@@ -1,15 +1,23 @@
+import Image from "next/image";
 import React from "react";
 
 type Props = {
   name: string;
   date: string;
   comment: string;
+  image: string;
 };
 
-const CardComment: React.FC<Props> = ({ name, date, comment }) => {
+const CardComment: React.FC<Props> = ({ name, date, comment, image }) => {
   return (
     <div className="flex gap-1 mb-6">
-      <i className="bx bx-user-circle text-4xl text-blueLight"></i>
+      <Image
+        src={image}
+        alt={name}
+        width={40}
+        height={0}
+        className="w-[40px] h-[40px] object-cover rounded-full"
+      />
       <div className="border border-slate-200 p-4 w-full rounded-lg">
         <div className="flex items-center gap-2">
           <h2 className="text-md font-semibold text-slate-600">{name} • </h2>

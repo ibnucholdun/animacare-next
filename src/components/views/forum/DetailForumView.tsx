@@ -1,8 +1,10 @@
 import CardComment from "@/components/fragments/CardComment";
 import Button from "@/components/ui/Button";
 import commentServices from "@/services/comment";
+import { capitalizeWord } from "@/utils/capitalWord";
 import { useSession } from "next-auth/react";
-import React from "react";
+import Image from "next/image";
+import React, { useState } from "react";
 
 type Props = {
   detailForum: any;
@@ -16,6 +18,7 @@ const DetailForumView: React.FC<Props> = ({
   setIsLoading,
 }) => {
   const session: any = useSession();
+  const [commentInput, setCommentInput] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,6 +28,7 @@ const DetailForumView: React.FC<Props> = ({
     const data = {
       comment: form.comment.value,
       author: session.data?.user?.fullname || "",
+      profileImage: session.data?.user?.image || "",
     };
 
     try {
@@ -51,16 +55,21 @@ const DetailForumView: React.FC<Props> = ({
           <h1
             className={` ${
               isLoading
-                ? "text-xl font-medium flex items-center gap-1"
+                ? "text-xl font-medium flex items-center gap-2"
                 : "bg-slate-200 h-8 w-32 rounded"
             }`}>
-            <i
+            <Image
+              src={detailForum?.profileImage}
+              alt={detailForum?.author}
+              width={40}
+              height={0}
               className={`${
                 isLoading
-                  ? "bx bx-user-circle text-5xl text-blueLight"
+                  ? "w-[30px] h-[30px] object-cover rounded-full"
                   : "hidden"
-              }`}></i>
-            {isLoading ? detailForum?.author : ""}
+              }`}
+            />
+            {isLoading ? capitalizeWord(detailForum?.author) : ""}
           </h1>
           <p
             className={` ${
@@ -94,15 +103,26 @@ const DetailForumView: React.FC<Props> = ({
       <h2 className="text-2xl font-semibold text-blueLight my-12">Komentar</h2>
       <section className="komentar">
         <div className="flex gap-3">
-          <i className="bx bx-user-circle text-5xl text-blueLight"></i>
+          <Image
+            src={session?.data?.user?.image}
+            alt={session?.data?.user?.fullname}
+            width={40}
+            height={0}
+            className="w-[40px] h-[40px] object-cover rounded-full"
+          />
           <form action="" onSubmit={handleSubmit} className="w-full">
             <textarea
               name="comment"
               id="comment"
               cols={30}
               rows={5}
+              value={commentInput}
+              onChange={(e) =>
+                setCommentInput(capitalizeWord(e.target.value) || "")
+              }
               placeholder="Tulis Komentar"
-              className="border border-blueLight p-4 w-full outline-none rounded-lg"></textarea>
+              className="border border-blueLight p-4 w-full outline-none rounded-lg"
+            />
             <div className="flex justify-end">
               <Button
                 type="submit"
@@ -119,12 +139,13 @@ const DetailForumView: React.FC<Props> = ({
             )
             .map((comment: any) => (
               <CardComment
-                name={comment.author}
+                name={capitalizeWord(comment?.author) || ""}
+                image={comment?.profileImage || "/profile.png"}
                 date={new Date(
-                  comment.created_at?.seconds * 1000
+                  comment?.created_at?.seconds * 1000
                 ).toDateString()}
-                comment={comment.comment}
-                key={comment.id}
+                comment={comment?.comment}
+                key={comment?.id}
               />
             ))}
         </div>

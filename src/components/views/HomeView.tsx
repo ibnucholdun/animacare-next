@@ -14,45 +14,56 @@ import {
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import CardArtikel from "../fragments/CardArtikel";
 
-type Props = {};
+type Props = {
+  article: any;
+};
 
 const iconBelanja = [
   {
     icon: "/iconMakananKucing.png",
     title: "Makanan Kucing",
+    link: "/belanja/makanan-kucing",
   },
   {
     icon: "/iconMakananAnjing.png",
     title: "Makanan Anjing",
+    link: "/belanja/makanan-anjing",
   },
   {
     icon: "/iconParfum.png",
     title: "Parfum",
+    link: "/belanja/parfum",
   },
   {
     icon: "/iconVitamin.png",
     title: "Vitamin",
+    link: "/belanja/vitamin",
   },
   {
     icon: "/iconKandang.png",
     title: "Kandang",
+    link: "/belanja/kandang",
   },
   {
     icon: "/iconSusu.png",
     title: "Susu",
+    link: "/belanja/susu",
   },
   {
     icon: "/iconObat.png",
     title: "Obat",
+    link: "/belanja/obat",
   },
   {
     icon: "/iconBoxPasir.png",
     title: "Box Pasir",
+    link: "/belanja/box-pasir",
   },
 ];
 
-const HomeView = (props: Props) => {
+const HomeView: React.FC<Props> = ({ article }) => {
   return (
     <div className="py-3">
       <section className="flex flex-row gap-5 justify-between items-center py-11">
@@ -104,7 +115,7 @@ const HomeView = (props: Props) => {
           <h1 className="text-2xl font-semibold">
             Jelajahi Artikel Menarik Seputar Hewan Peliharaan
           </h1>
-          <Link href="/article" className="text-blueLight text-xl underline">
+          <Link href="/artikel" className="text-blueLight text-xl underline">
             Lebih Banyak
           </Link>
         </div>
@@ -130,7 +141,7 @@ const HomeView = (props: Props) => {
               mousewheel
               navigation
               onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => console.log("slide change")}
+              onSlideChange={() => {}}
               modules={[
                 Navigation,
                 Pagination,
@@ -139,174 +150,16 @@ const HomeView = (props: Props) => {
                 Scrollbar,
                 A11y,
               ]}>
-              <SwiperSlide>
-                <div className="w-[400px] border shadow p-5 rounded-xl">
-                  <div className="mb-5">
-                    <Image
-                      src={"/artikel1.png"}
-                      width={500}
-                      height={500}
-                      alt={"article"}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold">
-                    Beri vaksin pada kucing umur 3 bulan
-                  </h2>
-                  <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Labore voluptates quaerat tempore quasi voluptas, error,
-                    laboriosam cumque enim dolor hic dolorum distinctio, veniam
-                    praesentium? Quibusdam ullam voluptatibus nobis officiis
-                    minima.
-                  </p>
-                  <Link
-                    href={"#"}
-                    className="text-blueLight text-base font-medium underline">
-                    Selengkapnya
-                  </Link>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-[400px] border shadow p-5 rounded-xl">
-                  <div className="mb-5">
-                    <Image
-                      src={"/artikel1.png"}
-                      width={500}
-                      height={500}
-                      alt={"article"}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold">
-                    Beri vaksin pada kucing umur 3 bulan
-                  </h2>
-                  <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Labore voluptates quaerat tempore quasi voluptas, error,
-                    laboriosam cumque enim dolor hic dolorum distinctio, veniam
-                    praesentium? Quibusdam ullam voluptatibus nobis officiis
-                    minima.
-                  </p>
-                  <Link
-                    href={"#"}
-                    className="text-blueLight text-base font-medium underline">
-                    Selengkapnya
-                  </Link>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-[400px] border shadow p-5 rounded-xl">
-                  <div className="mb-5">
-                    <Image
-                      src={"/artikel1.png"}
-                      width={500}
-                      height={500}
-                      alt={"article"}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold">
-                    Beri vaksin pada kucing umur 3 bulan
-                  </h2>
-                  <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Labore voluptates quaerat tempore quasi voluptas, error,
-                    laboriosam cumque enim dolor hic dolorum distinctio, veniam
-                    praesentium? Quibusdam ullam voluptatibus nobis officiis
-                    minima.
-                  </p>
-                  <Link
-                    href={"#"}
-                    className="text-blueLight text-base font-medium underline">
-                    Selengkapnya
-                  </Link>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-[400px] border shadow p-5 rounded-xl">
-                  <div className="mb-5">
-                    <Image
-                      src={"/artikel1.png"}
-                      width={500}
-                      height={500}
-                      alt={"article"}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold">
-                    Beri vaksin pada kucing umur 3 bulan
-                  </h2>
-                  <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Labore voluptates quaerat tempore quasi voluptas, error,
-                    laboriosam cumque enim dolor hic dolorum distinctio, veniam
-                    praesentium? Quibusdam ullam voluptatibus nobis officiis
-                    minima.
-                  </p>
-                  <Link
-                    href={"#"}
-                    className="text-blueLight text-base font-medium underline">
-                    Selengkapnya
-                  </Link>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-[400px] border shadow p-5 rounded-xl">
-                  <div className="mb-5">
-                    <Image
-                      src={"/artikel1.png"}
-                      width={500}
-                      height={500}
-                      alt={"article"}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold">
-                    Beri vaksin pada kucing umur 3 bulan
-                  </h2>
-                  <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Labore voluptates quaerat tempore quasi voluptas, error,
-                    laboriosam cumque enim dolor hic dolorum distinctio, veniam
-                    praesentium? Quibusdam ullam voluptatibus nobis officiis
-                    minima.
-                  </p>
-                  <Link
-                    href={"#"}
-                    className="text-blueLight text-base font-medium underline">
-                    Selengkapnya
-                  </Link>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="w-[400px] border shadow p-5 rounded-xl">
-                  <div className="mb-5">
-                    <Image
-                      src={"/artikel1.png"}
-                      width={500}
-                      height={500}
-                      alt={"article"}
-                      className="h-full w-full"
-                    />
-                  </div>
-                  <h2 className="text-xl font-semibold">
-                    Beri vaksin pada kucing umur 3 bulan
-                  </h2>
-                  <p className="text-sm font-normal text-gray500 my-2 line-clamp-3">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Labore voluptates quaerat tempore quasi voluptas, error,
-                    laboriosam cumque enim dolor hic dolorum distinctio, veniam
-                    praesentium? Quibusdam ullam voluptatibus nobis officiis
-                    minima.
-                  </p>
-                  <Link
-                    href={"#"}
-                    className="text-blueLight text-base font-medium underline">
-                    Selengkapnya
-                  </Link>
-                </div>
-              </SwiperSlide>
+              {article?.map((article: any) => (
+                <SwiperSlide key={article.id} className="flex flex-col">
+                  <CardArtikel
+                    image={article?.image}
+                    title={article?.title}
+                    description={article?.description}
+                    link={`/artikel/detail-artikel/${article?.id}`}
+                  />
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         </div>
@@ -319,12 +172,13 @@ const HomeView = (props: Props) => {
         <div className="flex flex-wrap items-center justify-center gap-12 mt-10">
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {iconBelanja.map((item, index) => (
-              <div
+              <Link
+                href={item.link || ""}
                 className="border-blueLight flex flex-col items-center justify-center px-3 py-11 gap-3 border-2 rounded-md h-[250px] w-[200px]"
                 key={index}>
                 <Image src={item.icon} width={100} height={100} alt={"icon"} />
                 <p className="text-xl font-semibold">{item.title}</p>
-              </div>
+              </Link>
             ))}
             <Link
               href={"/belanja"}

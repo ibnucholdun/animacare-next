@@ -1,9 +1,20 @@
 import HomeView from "@/components/views/HomeView";
+import articleServices from "@/services/articles";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { data } = useSession();
+  const [article, setArticle] = useState([]);
+
+  useEffect(() => {
+    const getArticle = async () => {
+      const { data } = await articleServices.getArticles();
+      setArticle(data.data);
+    };
+    getArticle();
+  }, []);
+
   return (
     <>
       <Head>
@@ -13,7 +24,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <main className="mx-24">
-        <HomeView />
+        <HomeView article={article} />
       </main>
     </>
   );

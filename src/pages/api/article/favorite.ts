@@ -122,7 +122,6 @@ export default async function handler(
           await deleteData(
             "favorite_articles",
             checkFavorite[0].id,
-            decoded.id,
             (status: boolean, result: any) => {
               if (status) {
                 res.status(200).json({
@@ -139,7 +138,8 @@ export default async function handler(
                   data: {},
                 });
               }
-            }
+            },
+            decoded.id
           );
         }
       }

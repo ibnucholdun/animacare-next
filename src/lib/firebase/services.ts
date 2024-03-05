@@ -1,4 +1,5 @@
 import {
+  deleteObject,
   getDownloadURL,
   getStorage,
   ref,
@@ -113,8 +114,8 @@ export const addData = async (
 export const deleteData = async (
   collectionName: string,
   id: any,
-  decoded: any,
-  callback: Function
+  callback: Function,
+  decoded?: string
 ) => {
   try {
     const docRef = doc(firestore, collectionName, id);
@@ -184,5 +185,16 @@ export const updateData = async (
     })
     .catch((error) => {
       callback(false);
+    });
+};
+
+export const deleteFile = async (url: string, callback: Function) => {
+  const storageRef = ref(storage, url);
+  await deleteObject(storageRef)
+    .then(() => {
+      return callback(true);
+    })
+    .catch((error) => {
+      return callback(false);
     });
 };

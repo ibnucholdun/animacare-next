@@ -11,7 +11,7 @@ type Props = {
 
 const CardArtikel: React.FC<Props> = ({ image, title, description, link }) => {
   return (
-    <div className="w-[400px] border shadow p-5 rounded-xl">
+    <div className="w-[400px] border shadow p-5 rounded-xl flex flex-col">
       <div className="mb-5">
         <Image
           src={image}
@@ -21,10 +21,14 @@ const CardArtikel: React.FC<Props> = ({ image, title, description, link }) => {
           className="h-full w-full"
         />
       </div>
-      <h2 className="text-xl font-semibold">{title}</h2>
-      <p
-        className="text-sm font-normal text-gray500 my-2 line-clamp-3"
-        dangerouslySetInnerHTML={{ __html: description }}></p>
+      <div className="h-full">
+        <h2 className="text-xl font-semibold">{title.substring(0, 50)}...</h2>
+        <p
+          className="text-sm font-normal text-gray500 my-2 line-clamp-3"
+          dangerouslySetInnerHTML={{
+            __html: description.substring(0, 100) + "...",
+          }}></p>
+      </div>
       <Link
         href={link}
         className="text-blueLight text-base font-medium underline">
