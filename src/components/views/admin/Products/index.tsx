@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ModalAddProduct from "./ModalAddProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct";
+import ModalDeleteProduct from "./ModalDeleteProduct";
 
 type Props = {
   products: any;
@@ -14,9 +15,12 @@ const ProductsAdminView: React.FC<Props> = ({ products }) => {
   const [productsData, setProductsData] = useState<any>([]);
   const [modalAddProduct, setModalAddProduct] = useState(false);
   const [modalUpdateProduct, setModalUpdateProduct] = useState<any>({});
+  const [modalDeleteProduct, setModalDeleteProduct] = useState<any>({});
+
   useEffect(() => {
     setProductsData(products);
   }, [products]);
+
   return (
     <>
       <AdminLayout>
@@ -70,7 +74,8 @@ const ProductsAdminView: React.FC<Props> = ({ products }) => {
                       </Button>
                       <Button
                         type="button"
-                        className="cursor-pointer bg-red-500 p-2 text-white">
+                        className="cursor-pointer bg-red-500 p-2 text-white"
+                        onClick={() => setModalDeleteProduct(product)}>
                         <i className="bx bx-trash" />
                       </Button>
                     </div>
@@ -91,6 +96,13 @@ const ProductsAdminView: React.FC<Props> = ({ products }) => {
         <ModalUpdateProduct
           setModalUpdateProduct={setModalUpdateProduct}
           modalUpdateProduct={modalUpdateProduct}
+          setProductsData={setProductsData}
+        />
+      )}
+      {Object.keys(modalDeleteProduct).length && (
+        <ModalDeleteProduct
+          modalDeletedProduct={modalDeleteProduct}
+          setModalDeletedProduct={setModalDeleteProduct}
           setProductsData={setProductsData}
         />
       )}
