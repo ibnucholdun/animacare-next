@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -7,13 +7,59 @@ import "swiper/css/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
+import Checkbox from "@/components/ui/Checkbox";
+import CardProduct from "@/components/fragments/CardProduct";
+import { convertIDR } from "@/utils/convertIDR";
+import { useRouter } from "next/router";
+import { capitalizeSentence } from "@/utils/capitalWord";
 
 type Props = {
   title: string;
   children: React.ReactNode;
+  productData: any;
 };
 
-const BelanjaKategoriLayout: React.FC<Props> = ({ title, children }) => {
+const BelanjaKategoriLayout: React.FC<Props> = ({
+  title,
+  children,
+  productData,
+}) => {
+  const [category, setCategory] = useState<any>({
+    ["Makanan Kucing"]: false,
+    ["Makanan Anjing"]: false,
+    ["Parfum"]: false,
+    ["Vitamin"]: false,
+    ["Kandang"]: false,
+    ["Susu"]: false,
+    ["Obat"]: false,
+    ["Box Pasir"]: false,
+    ["Pasir"]: false,
+    ["Aksesoris"]: false,
+    ["Shampo"]: false,
+    ["Tas Hewan"]: false,
+  });
+
+  const handelChange = (name: any) => {
+    setCategory((prevCategory: any) => ({
+      ...prevCategory,
+      [name]: !prevCategory[name],
+    }));
+  };
+
+  const checkedProducts = Object.entries(category)
+    .filter((category) => category[1])
+    .map((category) => category[0]);
+
+  const filteredProducts = productData.filter((items: any) =>
+    checkedProducts.includes(items.category)
+  );
+
+  const { query }: any = useRouter();
+  const checkedTitle = capitalizeSentence(
+    query?.belanja[0].split("-").join(" ")
+  );
+  console.log(checkedTitle);
+  console.log(category["Makanan Kucing"]);
   return (
     <div className="w-full">
       <Swiper
@@ -54,120 +100,148 @@ const BelanjaKategoriLayout: React.FC<Props> = ({ title, children }) => {
       <div className="w-full flex justify-between pl-24 h-full">
         <div className="w-9/12 mt-16 h-full">
           <h1 className="text-3xl font-semibold mb-12">{title}</h1>
-          <div className="flex flex-wrap gap-8 mb-24 h-full">{children}</div>
+          <div className="flex flex-wrap gap-8 mb-24 h-full">
+            {children}
+            {filteredProducts.map((item: any, index: number) => (
+              <CardProduct
+                key={item?.id}
+                image={item?.image}
+                title={item?.name}
+                price={convertIDR(item?.price)}
+              />
+            ))}
+          </div>
         </div>
         <div className="w-3/12 bg-slate-100 pt-16">
           <div className="ml-8 mr-24 bg-white p-3">
             <h3 className="text-xl font-semibold text-center mb-2">Kategori</h3>
             <div className="flex flex-col gap-3 justify-center ">
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6 "
-                  name="makanan-kucing"
-                  id="makanan-kucing"
-                />
-                <label htmlFor="makanan-kucing">Makanan Kucing</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="makanan-anjing"
-                  id="makanan-anjing"
-                />
-                <label htmlFor="makanan-anjing">Makanan Anjing</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="parfum"
-                  id="parfum"
-                />
-                <label htmlFor="parfum">Parfum</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="vitamin"
-                  id="vitamin"
-                />
-                <label htmlFor="vitamin">Vitamin</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="kandang"
-                  id="kandang"
-                />
-                <label htmlFor="kandang">Kandang</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="susu"
-                  id="susu"
-                />
-                <label htmlFor="susu">Susu</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="obat"
-                  id="obat"
-                />
-                <label htmlFor="obat">Obat</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="box-pasir"
-                  id="box-pasir"
-                />
-                <label htmlFor="box-pasir">Box Pasir</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="pasir"
-                  id="pasir"
-                />
-                <label htmlFor="pasir">Pasir</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="aksesoris"
-                  id="aksesoris"
-                />
-                <label htmlFor="aksesoris">Aksesoris</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="shampo"
-                  id="shampo"
-                />
-                <label htmlFor="shampo">Shampo</label>
-              </div>
-              <div className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  name="tas-hewan"
-                  id="tas-hewan"
-                />
-                <label htmlFor="tas-hewan">Tas Hewan</label>
-              </div>
+              <Checkbox
+                checked={
+                  checkedTitle === "Makanan Kucing"
+                    ? true
+                    : category["Makanan Kucing"]
+                }
+                handelChange={() => {
+                  handelChange("Makanan Kucing");
+                }}
+                name="makanan-kucing"
+                id="1"
+                title="Makanan Kucing"
+              />
+              <Checkbox
+                checked={
+                  checkedTitle === "Makanan Anjing"
+                    ? true
+                    : category["Makanan Anjing"]
+                }
+                handelChange={() => {
+                  handelChange("Makanan Anjing");
+                }}
+                name="makanan-anjing"
+                id="2"
+                title="Makanan Anjing"
+              />
+              <Checkbox
+                checked={checkedTitle === "Parfum" ? true : category["Parfum"]}
+                handelChange={() => {
+                  handelChange("Parfum");
+                }}
+                name="parfum"
+                id="3"
+                title="Parfum"
+              />
+              <Checkbox
+                checked={
+                  checkedTitle === "Vitamin" ? true : category["Vitamin"]
+                }
+                handelChange={() => {
+                  handelChange("Vitamin");
+                }}
+                name="vitamin"
+                id="4"
+                title="Vitamin"
+              />
+              <Checkbox
+                checked={
+                  checkedTitle === "Kandang" ? true : category["Kandang"]
+                }
+                handelChange={() => {
+                  handelChange("Kandang");
+                }}
+                name="kandang"
+                id="5"
+                title="Kandang"
+              />
+              <Checkbox
+                checked={checkedTitle === "Susu" ? true : category["Susu"]}
+                handelChange={() => {
+                  handelChange("Susu");
+                }}
+                name="susu"
+                id="6"
+                title="Susu"
+              />
+              <Checkbox
+                checked={checkedTitle === "Obat" ? true : category["Obat"]}
+                handelChange={() => {
+                  handelChange("Obat");
+                }}
+                name="obat"
+                id="7"
+                title="Obat"
+              />
+              <Checkbox
+                checked={
+                  checkedTitle === "Box Pasir" ? true : category["Box Pasir"]
+                }
+                handelChange={() => {
+                  handelChange("Box Pasir");
+                }}
+                name="box-pasir"
+                id="8"
+                title="Box Pasir"
+              />
+              <Checkbox
+                checked={checkedTitle === "Pasir" ? true : category["Pasir"]}
+                handelChange={() => {
+                  handelChange("Pasir");
+                }}
+                name="pasir"
+                id="9"
+                title="Pasir"
+              />
+              <Checkbox
+                checked={
+                  checkedTitle === "Aksesoris" ? true : category["Aksesoris"]
+                }
+                handelChange={() => {
+                  handelChange("Aksesoris");
+                }}
+                name="aksesoris"
+                id="10"
+                title="Aksesoris"
+              />
+              <Checkbox
+                checked={checkedTitle === "Shampo" ? true : category["Shampo"]}
+                handelChange={() => {
+                  handelChange("Shampo");
+                }}
+                name="shampo"
+                id="11"
+                title="Shampo"
+              />
+              <Checkbox
+                checked={
+                  checkedTitle === "Tas Hewan" ? true : category["Tas Hewan"]
+                }
+                handelChange={() => {
+                  handelChange("Tas Hewan");
+                }}
+                name="tas-hewan"
+                id="12"
+                title="Tas Hewan"
+              />
             </div>
           </div>
         </div>

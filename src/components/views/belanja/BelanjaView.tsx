@@ -1,12 +1,15 @@
 import CardProduct from "@/components/fragments/CardProduct";
 import BelanjaKategoriLayout from "@/components/layouts/BelanjaKategoriLayout";
 import { capitalizeSentence } from "@/utils/capitalWord";
+import { convertIDR } from "@/utils/convertIDR";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-type Props = {};
+type Props = {
+  productData: any;
+};
 
 const iconBelanja = [
   {
@@ -62,7 +65,7 @@ const iconBelanja = [
   {
     icon: "/iconSampo.png",
     title: "Shampo",
-    link: "/belanja/sampo",
+    link: "/belanja/shampo",
   },
   {
     icon: "/iconTasHewan.png",
@@ -71,9 +74,9 @@ const iconBelanja = [
   },
 ];
 
-const BelanjaView = (props: Props) => {
-  const { query } = useRouter();
-  const [checked, setChecked] = useState(false);
+const BelanjaView: React.FC<Props> = ({ productData }) => {
+  const { query }: any = useRouter();
+
   return (
     <>
       {Object.keys(query).length === 0 && (
@@ -149,14 +152,162 @@ const BelanjaView = (props: Props) => {
       )}
       {query?.belanja && (
         <BelanjaKategoriLayout
+          productData={productData}
           title={`${capitalizeSentence(
             query?.belanja[0].split("-").join(" ")
           )}`}>
-          <CardProduct
-            image="/produk.jpg"
-            title="Royal Canin Hair and Skin Care Makanan Kucing Dewasa 400g"
-            price="Rp254.000"
-          />
+          {query?.belanja[0] === "makanan-kucing" &&
+            productData
+              .filter(
+                (item: { category: string }) =>
+                  item.category === "Makanan Kucing"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "makanan-anjing" &&
+            productData
+              .filter(
+                (item: { category: string }) =>
+                  item.category === "Makanan Anjing"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "parfum" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Parfum"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "vitamin" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Vitamin"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "kandang" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Kandang"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "susu" &&
+            productData
+              .filter((item: { category: string }) => item.category === "Susu")
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "obat" &&
+            productData
+              .filter((item: { category: string }) => item.category === "Obat")
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "box-pasir" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Box Pasir"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "pasir" &&
+            productData
+              .filter((item: { category: string }) => item.category === "Pasir")
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "aksesoris" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Aksesoris"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "shampo" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Shampo"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
+          {query?.belanja[0] === "tas-hewan" &&
+            productData
+              .filter(
+                (item: { category: string }) => item.category === "Tas Hewan"
+              )
+              .map((item: any, index: number) => (
+                <CardProduct
+                  key={item?.id}
+                  image={item?.image}
+                  title={item?.name}
+                  price={convertIDR(item?.price)}
+                />
+              ))}
         </BelanjaKategoriLayout>
       )}
     </>
