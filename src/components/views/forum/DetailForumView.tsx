@@ -126,7 +126,7 @@ const DetailForumView: React.FC<Props> = ({
             <div className="flex justify-end">
               <Button
                 type="submit"
-                className="bg-blueLight text-white mt-6 px-6 text-lg outline-none">
+                className="bg-blueLight text-white mt-6 px-6 text-lg hover:text-blueLight hover:bg-white">
                 Kirim
               </Button>
             </div>

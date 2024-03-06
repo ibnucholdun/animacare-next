@@ -88,7 +88,7 @@ const PostForumView = (props: Props) => {
             <div className="w-3/4 flex justify-end">
               <Button
                 type="submit"
-                className=" px-12 bg-blueLight text-white text-lg">
+                className=" px-12 bg-blueLight text-white text-lg hover:text-blueLight hover:bg-white">
                 {isLoading ? "Loading..." : "Buat"}
               </Button>
             </div>
