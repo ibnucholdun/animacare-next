@@ -1,13 +1,20 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import Select from "@/components/ui/Select";
-import productServices from "@/services/products";
-import { useSession } from "next-auth/react";
-import { uploadFile } from "@/lib/firebase/services";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+
+// Components
+import Select from "@/components/ui/Select";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import InputFile from "@/components/ui/InputFile";
+
+// Services
+import productServices from "@/services/products";
+import { uploadFile } from "@/lib/firebase/services";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   setModalAddProduct: Dispatch<SetStateAction<boolean>>;
@@ -42,7 +49,6 @@ const ModalAddProduct: React.FC<Props> = ({
               data,
               session?.data?.accessToken
             );
-            console.log(result);
             if (result.status === 200) {
               setIsLoading(false);
               setChangeImage(null);
@@ -50,14 +56,14 @@ const ModalAddProduct: React.FC<Props> = ({
               setModalAddProduct(false);
               const { data } = await productServices.getAllProducts();
               setProductsData(data.data);
-              alert("Add Product Success");
+              toast.success("Add Product Success");
             } else {
               setIsLoading(false);
-              alert("Add Product Failed");
+              toast.error("Add Product Failed");
             }
           } else {
             setIsLoading(false);
-            alert("Add Product Failed");
+            toast.error("Add Product Failed");
           }
         }
       );
@@ -86,7 +92,7 @@ const ModalAddProduct: React.FC<Props> = ({
       uploadImage(form, result.data.data.id);
     } else {
       setIsLoading(false);
-      alert("Add Product Failed");
+      toast.error("Add Product Failed");
     }
   };
   return (

@@ -1,21 +1,26 @@
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+// Services
+import authServices from "@/services/auth";
+
+// Components
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import authServices from "@/services/auth";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+
+//Toastify
+import { toast } from "react-toastify";
 
 type Props = {};
 
 const RegisterView = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const { push } = useRouter();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
-    setError("");
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
@@ -32,14 +37,15 @@ const RegisterView = (props: Props) => {
       if (result.status === 200) {
         setIsLoading(false);
         form.reset();
+        toast.success("Register Success");
         push("/auth/login");
       } else {
         setIsLoading(false);
-        setError("Email already exists");
+        toast.error("Email already exists");
       }
     } catch (error) {
       setIsLoading(false);
-      setError("Something went wrong");
+      toast.error("Email already exists");
     }
   };
 
@@ -50,7 +56,6 @@ const RegisterView = (props: Props) => {
       description="Isi data dirimu dengan melengkapi form ini untuk bergabung bersama kami"
       image="/authIcon.png">
       <div className="p-[20px]">
-        {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit}>
           <Input
             label="Email"

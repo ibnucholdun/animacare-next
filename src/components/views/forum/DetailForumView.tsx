@@ -1,10 +1,19 @@
-import CardComment from "@/components/fragments/CardComment";
-import Button from "@/components/ui/Button";
-import commentServices from "@/services/comment";
-import { capitalizeWord } from "@/utils/capitalWord";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useState } from "react";
+
+// Components
+import CardComment from "@/components/fragments/CardComment";
+import Button from "@/components/ui/Button";
+
+// Services
+import commentServices from "@/services/comment";
+
+// Utils
+import { capitalizeWord } from "@/utils/capitalWord";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   detailForum: any;
@@ -41,10 +50,11 @@ const DetailForumView: React.FC<Props> = ({
         setIsLoading(false);
         form.reset();
         window.location.reload();
+        toast.success("Comment Success");
       }
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
+      toast.error("Comment Failed");
     }
   };
 

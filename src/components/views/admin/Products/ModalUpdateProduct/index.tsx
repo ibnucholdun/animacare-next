@@ -1,13 +1,20 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import productServices from "@/services/products";
-import { useSession } from "next-auth/react";
-import { uploadFile } from "@/lib/firebase/services";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+
+// Services
+import productServices from "@/services/products";
+import { uploadFile } from "@/lib/firebase/services";
+
+// Components
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import Select from "@/components/ui/Select";
 import InputFile from "@/components/ui/InputFile";
 import Button from "@/components/ui/Button";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   setModalUpdateProduct: Dispatch<SetStateAction<boolean>>;
@@ -50,10 +57,10 @@ const ModalUpdateProduct: React.FC<Props> = ({
       setModalUpdateProduct(false);
       const { data } = await productServices.getAllProducts();
       setProductsData(data.data);
-      alert("Update Product Success");
+      toast.success("Update Product Success");
     } else {
       setIsLoading(false);
-      alert("Update Product Failed");
+      toast.error("Update Product Failed");
     }
   };
 
@@ -75,7 +82,7 @@ const ModalUpdateProduct: React.FC<Props> = ({
             updateProduct(form, newImageUrl);
           } else {
             setIsLoading(false);
-            alert("Update Product Failed");
+            toast.error("Update Product Failed");
           }
         }
       );

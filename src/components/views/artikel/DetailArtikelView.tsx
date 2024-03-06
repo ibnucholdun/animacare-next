@@ -1,7 +1,12 @@
-import favoriteArtikel from "@/services/favoritesArticle";
+import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+
+// Services
+import favoriteArtikel from "@/services/favoritesArticle";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   detailArticle: any;
@@ -37,9 +42,10 @@ const DetailArtikelView: React.FC<Props> = ({
 
       if (result.status === 200) {
         window.location.reload();
+        toast.success("Artikel Ditandai Sebagai Favorite");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Artikel Gagal Ditandai Sebagai Favorite");
     }
   };
 
@@ -56,9 +62,10 @@ const DetailArtikelView: React.FC<Props> = ({
 
       if (result.status === 200) {
         window.location.reload();
+        toast.success("Artikel Dihapus Dari Favorite");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Artikel Gagal Dihapus Dari Favorite");
     }
   };
 

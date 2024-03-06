@@ -1,10 +1,17 @@
+import React, { Dispatch, FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
+
+// Components
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
+
+// Services
 import userServices from "@/services/users";
-import { useSession } from "next-auth/react";
-import React, { Dispatch, FormEvent, useState } from "react";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   modalUpdateUser: any;
@@ -37,11 +44,13 @@ const ModalUpdateUser: React.FC<Props> = ({
       if (result.status === 200) {
         setIsLoading(false);
         setModalUpdateUser({});
+        toast.success("Update User Success");
         const { data } = await userServices.getAllUsers();
         setUsersData(data.data);
       }
     } catch (error) {
       setIsLoading(false);
+      toast.error("Update User Failed");
     }
   };
 

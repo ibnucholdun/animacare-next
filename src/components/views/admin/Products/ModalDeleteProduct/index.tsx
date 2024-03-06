@@ -1,9 +1,16 @@
 import React, { Dispatch, useState } from "react";
 import { useSession } from "next-auth/react";
+
+// Services
 import productServices from "@/services/products";
 import { deleteFile } from "@/lib/firebase/services";
+
+// Components
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   modalDeletedProduct: any;
@@ -35,7 +42,7 @@ const ModalDeleteProduct: React.FC<Props> = ({
         }`,
         async (status: boolean) => {
           if (status) {
-            alert("Delete Product Success");
+            toast.success("Delete Product Success");
           }
         }
       );
@@ -44,7 +51,7 @@ const ModalDeleteProduct: React.FC<Props> = ({
       setProductsData(data.data);
     } else {
       setIsLoading(false);
-      alert("Delete Product Failed");
+      toast.error("Delete Product Failed");
     }
   };
   return (

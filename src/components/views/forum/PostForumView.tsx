@@ -16,6 +16,9 @@ import { capitalizeWord } from "@/utils/capitalWord";
 // Assets
 import { ImagePost } from "@/assets/images";
 
+// Toastify
+import { toast } from "react-toastify";
+
 type Props = {};
 
 const PostForumView = (props: Props) => {
@@ -48,10 +51,11 @@ const PostForumView = (props: Props) => {
         setIsLoading(false);
         form.reset();
         router.push("/forum");
+        toast.success("Topik Forum Berhasil Di Posting");
       }
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
+      toast.error("Topik Forum Gagal Di Posting");
     }
   };
 

@@ -5,12 +5,19 @@ import React, {
   useRef,
   useState,
 } from "react";
-import ProfileLayout from "@/components/layouts/ProfileLayout";
 import Image from "next/image";
+
+// Components
+import ProfileLayout from "@/components/layouts/ProfileLayout";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+
+// Services
 import userServices from "@/services/users";
 import { uploadFile } from "@/lib/firebase/services";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   profile: any;
@@ -45,8 +52,10 @@ const ProfileView: React.FC<Props> = ({ profile, setProfile, session }) => {
         phone: data.phone,
       });
       form.reset();
+      toast.success("Profile Berhasil Diupdate");
     } else {
       setIsLoading("");
+      toast.error("Profile Gagal Diupdate");
     }
   };
   const handleChangeProfilePicture = (e: FormEvent<HTMLFormElement>) => {
@@ -79,15 +88,18 @@ const ProfileView: React.FC<Props> = ({ profile, setProfile, session }) => {
               });
               setImage(null);
               form.reset();
+              toast.success("Foto Profile Berhasil Diupdate");
               setDisabled(true);
               URL.revokeObjectURL(URL.createObjectURL(image!));
             } else {
               setIsLoading("");
+              toast.error("Foto Profile Gagal Diupdate");
             }
           } else {
             setIsLoading("");
             setImage(null);
             setDisabled(true);
+            toast.error("Foto Profile Gagal Diupdate");
           }
         }
       );

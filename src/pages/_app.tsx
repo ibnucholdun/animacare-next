@@ -6,6 +6,8 @@ import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/fragments/Navbar/Index";
 import Footer from "@/components/fragments/Footer";
 import { useRouter } from "next/router";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,6 +32,19 @@ export default function App({
       </Head>
       <div className={poppins.className}>
         {!disableNavbarAndFooter.includes(pathname.split("/")[1]) && <Navbar />}
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={"light"}
+          transition={Bounce}
+        />
         <Component {...pageProps} />
         {!disableNavbarAndFooter.includes(pathname.split("/")[1]) && <Footer />}
       </div>

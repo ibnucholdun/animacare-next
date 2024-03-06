@@ -1,8 +1,15 @@
 import React, { Dispatch, useState } from "react";
 import { useSession } from "next-auth/react";
+
+// Services
 import userServices from "@/services/users";
+
+// Components
 import Modal from "@/components/ui/Modal";
 import Button from "@/components/ui/Button";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {
   modalDeletedUser: any;
@@ -29,10 +36,12 @@ const ModalDeleteUser: React.FC<Props> = ({
     if (result.status === 200) {
       setIsLoading(false);
       setModalDeletedUser({});
+      toast.success("Delete User Success");
       const { data } = await userServices.getAllUsers();
       setUsersData(data.data);
     } else {
       setIsLoading(false);
+      toast.error("Delete User Failed");
     }
   };
   return (

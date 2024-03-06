@@ -11,19 +11,19 @@ import Input from "@/components/ui/Input";
 // Assets
 import { AuthIcon2 } from "@/assets/icons";
 
+// Toastify
+import { toast } from "react-toastify";
+
 type Props = {};
 
 const LoginView = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
   const { push, query } = useRouter();
 
   const callbackUrl: any = query.callbackUrl || "/";
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
-    setError("");
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
@@ -39,13 +39,14 @@ const LoginView = (props: Props) => {
         setIsLoading(false);
         form.reset();
         push(callbackUrl);
+        toast.success("Login Success");
       } else {
         setIsLoading(false);
-        setError("Email or Password is incorrect");
+        toast.error("Email or Password is incorrect");
       }
     } catch (error) {
       setIsLoading(false);
-      setError("Something went wrong");
+      toast.error("Email or Password is incorrect");
     }
   };
 
@@ -56,7 +57,6 @@ const LoginView = (props: Props) => {
       description="Untuk tetap terhubung dengan kami, Masuk menggunakan akun yang sudah terdaftar"
       image={AuthIcon2}>
       <div className="p-[20px]">
-        {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit}>
           <Input
             label="Email"
