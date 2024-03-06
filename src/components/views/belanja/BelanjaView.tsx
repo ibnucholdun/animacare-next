@@ -1,11 +1,32 @@
-import CardProduct from "@/components/fragments/CardProduct";
-import BelanjaKategoriLayout from "@/components/layouts/BelanjaKategoriLayout";
-import { capitalizeSentence } from "@/utils/capitalWord";
-import { convertIDR } from "@/utils/convertIDR";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+
+// Components
+import CardProduct from "@/components/fragments/CardProduct";
+import BelanjaKategoriLayout from "@/components/layouts/BelanjaKategoriLayout";
+
+// Utils
+import { capitalizeSentence } from "@/utils/capitalWord";
+import { convertIDR } from "@/utils/convertIDR";
+
+// Assets
+import {
+  IconMakananKucing,
+  IconMakananAnjing,
+  IconParfum,
+  IconVitamin,
+  IconKandang,
+  IconSusu,
+  IconObat,
+  IconBoxPasir,
+  IconPasir,
+  IconAksesoris,
+  IconSampo,
+  IconTasHewan,
+} from "@/assets/icons";
+import { Belanja1, Belanja2, Belanja3 } from "@/assets/images";
 
 type Props = {
   productData: any;
@@ -13,62 +34,62 @@ type Props = {
 
 const iconBelanja = [
   {
-    icon: "/iconMakananKucing.png",
+    icon: IconMakananKucing,
     title: "Makanan Kucing",
     link: "/belanja/makanan-kucing",
   },
   {
-    icon: "/iconMakananAnjing.png",
+    icon: IconMakananAnjing,
     title: "Makanan Anjing",
     link: "/belanja/makanan-anjing",
   },
   {
-    icon: "/iconParfum.png",
+    icon: IconParfum,
     title: "Parfum",
     link: "/belanja/parfum",
   },
   {
-    icon: "/iconVitamin.png",
+    icon: IconVitamin,
     title: "Vitamin",
     link: "/belanja/vitamin",
   },
   {
-    icon: "/iconKandang.png",
+    icon: IconKandang,
     title: "Kandang",
     link: "/belanja/kandang",
   },
   {
-    icon: "/iconSusu.png",
+    icon: IconSusu,
     title: "Susu",
     link: "/belanja/susu",
   },
   {
-    icon: "/iconObat.png",
+    icon: IconObat,
     title: "Obat",
     link: "/belanja/obat",
   },
   {
-    icon: "/iconBoxPasir.png",
+    icon: IconBoxPasir,
     title: "Box Pasir",
     link: "/belanja/box-pasir",
   },
   {
-    icon: "/iconPasir.png",
+    icon: IconPasir,
     title: "Pasir",
     link: "/belanja/pasir",
   },
   {
-    icon: "/iconAksesoris.png",
+    icon: IconAksesoris,
     title: "Aksesoris",
     link: "/belanja/aksesoris",
   },
   {
-    icon: "/iconSampo.png",
+    icon: IconSampo,
     title: "Shampo",
     link: "/belanja/shampo",
   },
   {
-    icon: "/iconTasHewan.png",
+    icon: IconTasHewan,
     title: "Tas Hewan",
     link: "/belanja/tas-hewan",
   },
@@ -88,7 +109,7 @@ const BelanjaView: React.FC<Props> = ({ productData }) => {
           <section className="w-full flex justify-between p-6 mt-12 mb-24 gap-8">
             <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
               <Image
-                src="/belanja1.png"
+                src={Belanja1}
                 alt="belanja"
                 width={500}
                 height={500}
@@ -101,7 +122,7 @@ const BelanjaView: React.FC<Props> = ({ productData }) => {
             </div>
             <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
               <Image
-                src="/belanja2.png"
+                src={Belanja2}
                 alt="belanja"
                 width={500}
                 height={500}
@@ -115,7 +136,7 @@ const BelanjaView: React.FC<Props> = ({ productData }) => {
             </div>
             <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
               <Image
-                src="/belanja3.png"
+                src={Belanja3}
                 alt="belanja"
                 width={500}
                 height={500}

@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import Image from "next/image";
+// Components
 import Checkbox from "@/components/ui/Checkbox";
 import CardProduct from "@/components/fragments/CardProduct";
+
+// Utils
 import { convertIDR } from "@/utils/convertIDR";
-import { useRouter } from "next/router";
 import { capitalizeSentence } from "@/utils/capitalWord";
+
+// Assets
+import { BelanjaBanner1, BelanjaBanner2 } from "@/assets/images";
 
 type Props = {
   title: string;
@@ -58,8 +65,7 @@ const BelanjaKategoriLayout: React.FC<Props> = ({
   const checkedTitle = capitalizeSentence(
     query?.belanja[0].split("-").join(" ")
   );
-  console.log(checkedTitle);
-  console.log(category["Makanan Kucing"]);
+
   return (
     <div className="w-full">
       <Swiper
@@ -77,7 +83,7 @@ const BelanjaKategoriLayout: React.FC<Props> = ({
         <SwiperSlide>
           <div className="w-full">
             <Image
-              src="/belanjaBanner1.png"
+              src={BelanjaBanner1}
               alt="Belanja Banner"
               width={1000}
               height={1000}
@@ -88,7 +94,7 @@ const BelanjaKategoriLayout: React.FC<Props> = ({
         <SwiperSlide>
           <div className="w-full">
             <Image
-              src="/belanjaBanner2.png"
+              src={BelanjaBanner2}
               alt="belanja banner"
               width={1000}
               height={1000}

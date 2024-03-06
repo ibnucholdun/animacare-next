@@ -1,11 +1,20 @@
+import React, { useState } from "react";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+// Components
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+
+// Services
 import forumServices from "@/services/forum";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+
+// Utils
 import { capitalizeWord } from "@/utils/capitalWord";
+
+// Assets
+import { ImagePost } from "@/assets/images";
 
 type Props = {};
 
@@ -50,7 +59,7 @@ const PostForumView = (props: Props) => {
     <div className="mx-24 my-12">
       <div className="flex justify-between gap-[100px]">
         <div className="w-full">
-          <Image src="/imagePost.png" alt="image" width={500} height={500} />
+          <Image src={ImagePost} alt="image" width={500} height={500} />
         </div>
         <div className="w-full">
           <form action="" onSubmit={handleSubmit}>

@@ -140,7 +140,7 @@ const DetailForumView: React.FC<Props> = ({
             .map((comment: any) => (
               <CardComment
                 name={capitalizeWord(comment?.author) || ""}
-                image={comment?.profileImage || "/profile.png"}
+                image={comment?.profileImage}
                 date={new Date(
                   comment?.created_at?.seconds * 1000
                 ).toDateString()}

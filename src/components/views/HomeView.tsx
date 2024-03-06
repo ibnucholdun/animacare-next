@@ -1,7 +1,8 @@
 import React from "react";
-import Button from "../ui/Button";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+
+// Swipper
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Navigation,
@@ -14,7 +15,23 @@ import {
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
+// Components
+import Button from "../ui/Button";
 import CardArtikel from "../fragments/CardArtikel";
+
+// Assets
+import { ImageHero, ImageHero2 } from "@/assets/images";
+import {
+  IconMakananKucing,
+  IconMakananAnjing,
+  IconParfum,
+  IconVitamin,
+  IconKandang,
+  IconSusu,
+  IconObat,
+  IconBoxPasir,
+} from "@/assets/icons";
 
 type Props = {
   article: any;
@@ -22,42 +39,42 @@ type Props = {
 
 const iconBelanja = [
   {
-    icon: "/iconMakananKucing.png",
+    icon: IconMakananKucing,
     title: "Makanan Kucing",
     link: "/belanja/makanan-kucing",
   },
   {
-    icon: "/iconMakananAnjing.png",
+    icon: IconMakananAnjing,
     title: "Makanan Anjing",
     link: "/belanja/makanan-anjing",
   },
   {
-    icon: "/iconParfum.png",
+    icon: IconParfum,
     title: "Parfum",
     link: "/belanja/parfum",
   },
   {
-    icon: "/iconVitamin.png",
+    icon: IconVitamin,
     title: "Vitamin",
     link: "/belanja/vitamin",
   },
   {
-    icon: "/iconKandang.png",
+    icon: IconKandang,
     title: "Kandang",
     link: "/belanja/kandang",
   },
   {
-    icon: "/iconSusu.png",
+    icon: IconSusu,
     title: "Susu",
     link: "/belanja/susu",
   },
   {
-    icon: "/iconObat.png",
+    icon: IconObat,
     title: "Obat",
     link: "/belanja/obat",
   },
   {
-    icon: "/iconBoxPasir.png",
+    icon: IconBoxPasir,
     title: "Box Pasir",
     link: "/belanja/box-pasir",
   },
@@ -65,7 +82,7 @@ const iconBelanja = [
 
 const HomeView: React.FC<Props> = ({ article }) => {
   return (
-    <div className="py-3">
+    <main className="py-3">
       <section className="flex flex-row gap-5 justify-between items-center py-11">
         <div className="w-full flex flex-col gap-4">
           <h1 className="text-3xl font-semibold">
@@ -80,18 +97,13 @@ const HomeView: React.FC<Props> = ({ article }) => {
           <Button className="bg-blueLight text-white px-7 w-2/12">Mulai</Button>
         </div>
         <div className="w-full flex justify-center">
-          <Image
-            src="/imageHero.png"
-            alt="image hero"
-            width={500}
-            height={500}
-          />
+          <Image src={ImageHero} alt="image hero" width={500} height={500} />
         </div>
       </section>
       <section className="my-24 flex flex-row gap-10 justify-between items-center">
         <div className="w-full">
           <Image
-            src="/imageHero2.png"
+            src={ImageHero2}
             alt="image hero"
             width={500}
             height={700}
@@ -188,7 +200,7 @@ const HomeView: React.FC<Props> = ({ article }) => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

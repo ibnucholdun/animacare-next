@@ -1,14 +1,17 @@
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+// Assets
+import { ImageSliderArtikel, ImageSliderArtikel2 } from "@/assets/images";
 
 type Props = {
   children: React.ReactNode;
@@ -50,7 +53,7 @@ const ArtikelLayout: React.FC<Props> = ({ children }) => {
             </div>
             <div className="w-5/12">
               <Image
-                src="/imageSliderArtikel.png"
+                src={ImageSliderArtikel}
                 alt="image hero"
                 width={500}
                 height={500}
@@ -77,7 +80,7 @@ const ArtikelLayout: React.FC<Props> = ({ children }) => {
             </div>
             <div className="w-5/12">
               <Image
-                src="/imageSliderArtikel2.png"
+                src={ImageSliderArtikel2}
                 alt="image hero"
                 width={500}
                 height={500}
