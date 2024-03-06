@@ -28,6 +28,8 @@ import {
 } from "@/assets/icons";
 import { Belanja1, Belanja2, Belanja3 } from "@/assets/images";
 
+import { motion } from "framer-motion";
+
 type Props = {
   productData: any;
 };
@@ -108,26 +110,36 @@ const BelanjaView: React.FC<Props> = ({ productData }) => {
           </h1>
           <section className="w-full flex justify-between p-6 mt-12 mb-24 gap-8">
             <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
-              <Image
-                src={Belanja1}
-                alt="belanja"
-                width={500}
-                height={500}
-                className="w-64"
-              />
+              <motion.div
+                initial={{ opacity: 0, y: "100%" }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}>
+                <Image
+                  src={Belanja1}
+                  alt="belanja"
+                  width={500}
+                  height={500}
+                  className="w-64"
+                />
+              </motion.div>
               <p className="text-lg font-light text-center mt-4">
                 Selamat berbelanja!, silahkan pilih kategori produk sesuai
                 kebutuhan yang Anda inginkan
               </p>
             </div>
             <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
-              <Image
-                src={Belanja2}
-                alt="belanja"
-                width={500}
-                height={500}
-                className="w-64"
-              />
+              <motion.div
+                initial={{ opacity: 0, y: "-100%" }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}>
+                <Image
+                  src={Belanja2}
+                  alt="belanja"
+                  width={500}
+                  height={500}
+                  className="w-64"
+                />
+              </motion.div>
               <p className="text-lg font-light text-center mt-4">
                 Setelah Anda memilih kategori produk dan memilih salah satu
                 produk yang Anda inginkan, kami akan mengarahkan Anda ke salah
@@ -135,13 +147,18 @@ const BelanjaView: React.FC<Props> = ({ productData }) => {
               </p>
             </div>
             <div className="flex flex-col gap-3 justify-center items-center w-full h-full">
-              <Image
-                src={Belanja3}
-                alt="belanja"
-                width={500}
-                height={500}
-                className="w-64"
-              />
+              <motion.div
+                initial={{ opacity: 0, y: "100%" }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}>
+                <Image
+                  src={Belanja3}
+                  alt="belanja"
+                  width={500}
+                  height={500}
+                  className="w-64"
+                />
+              </motion.div>
               <p className="text-lg font-light text-center mt-4">
                 Selesaikan proses belanja Anda dan temukan banyak diskon yang
                 bisa Anda dapatkan pada produk yang diinginkan.
@@ -153,18 +170,24 @@ const BelanjaView: React.FC<Props> = ({ productData }) => {
             <div className="flex flex-wrap items-center justify-center gap-12 mt-10">
               <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
                 {iconBelanja.map((item, index) => (
-                  <Link
-                    href={item.link || ""}
-                    className="border-blueLight flex flex-col items-center justify-center px-3 py-11 gap-3 border-2 rounded-md h-[250px] w-[200px]"
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
                     key={index}>
-                    <Image
-                      src={item.icon}
-                      width={100}
-                      height={100}
-                      alt={"icon"}
-                    />
-                    <p className="text-xl font-semibold">{item.title}</p>
-                  </Link>
+                    <Link
+                      href={item.link || ""}
+                      className="border-blueLight flex flex-col items-center justify-center px-3 py-11 gap-3 border-2 rounded-md h-[250px] w-[200px]"
+                      key={index}>
+                      <Image
+                        src={item.icon}
+                        width={100}
+                        height={100}
+                        alt={"icon"}
+                      />
+                      <p className="text-xl font-semibold">{item.title}</p>
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             </div>
