@@ -1,13 +1,14 @@
+import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import { StaticImageData } from "next/image";
 
 type Props = {
   children: React.ReactNode;
   title: string;
   tagline: string;
   description: string;
-  image: string;
+  image: string | StaticImageData;
 };
 
 const AuthLayout = (props: Props) => {

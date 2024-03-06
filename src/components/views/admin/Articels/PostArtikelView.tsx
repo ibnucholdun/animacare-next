@@ -1,12 +1,19 @@
-import AdminLayout from "@/components/layouts/AdminLayout";
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import Button from "@/components/ui/Button";
-import { uploadFile } from "@/lib/firebase/services";
-import articleServices from "@/services/articles";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+
+// Components
+import AdminLayout from "@/components/layouts/AdminLayout";
+import Button from "@/components/ui/Button";
+
+// Services
+import { uploadFile } from "@/lib/firebase/services";
+import articleServices from "@/services/articles";
+
+// Toastify
+import { toast } from "react-toastify";
 
 const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -82,14 +89,15 @@ const PostArtikelView = (props: Props) => {
 
               if (data) {
                 router.push("/admin/articles");
+                toast.success("Add Product Success");
               }
             } else {
               setIsLoading(false);
-              console.log("Add Product Failed");
+              toast.error("Add Product Failed");
             }
           } else {
             setIsLoading(false);
-            console.log("Add Product Failed");
+            toast.error("Add Product Failed");
           }
         }
       );

@@ -1,4 +1,6 @@
 import React from "react";
+
+// Components
 import ArtikelLayout from "../../layouts/ArtikelLayout";
 import CardArtikel from "@/components/fragments/CardArtikel";
 import CardArtikelSkeleton from "@/components/fragments/CardArtikelSkeleton";

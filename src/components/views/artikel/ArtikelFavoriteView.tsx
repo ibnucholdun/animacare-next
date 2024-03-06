@@ -1,6 +1,8 @@
+import React, { useEffect, useState } from "react";
+
+// Components
 import CardArtikel from "@/components/fragments/CardArtikel";
 import ArtikelLayout from "@/components/layouts/ArtikelLayout";
-import React, { useEffect, useState } from "react";
 
 type Props = {
   profile: any;

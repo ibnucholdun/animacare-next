@@ -1,11 +1,23 @@
+import React, { useState } from "react";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+// Components
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+
+// Services
 import forumServices from "@/services/forum";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+
+// Utils
 import { capitalizeWord } from "@/utils/capitalWord";
+
+// Assets
+import { ImagePost } from "@/assets/images";
+
+// Toastify
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -39,10 +51,11 @@ const PostForumView = (props: Props) => {
         setIsLoading(false);
         form.reset();
         router.push("/forum");
+        toast.success("Topik Forum Berhasil Di Posting");
       }
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
+      toast.error("Topik Forum Gagal Di Posting");
     }
   };
 
@@ -50,7 +63,7 @@ const PostForumView = (props: Props) => {
     <div className="mx-24 my-12">
       <div className="flex justify-between gap-[100px]">
         <div className="w-full">
-          <Image src="/imagePost.png" alt="image" width={500} height={500} />
+          <Image src={ImagePost} alt="image" width={500} height={500} />
         </div>
         <div className="w-full">
           <form action="" onSubmit={handleSubmit}>
@@ -79,7 +92,7 @@ const PostForumView = (props: Props) => {
             <div className="w-3/4 flex justify-end">
               <Button
                 type="submit"
-                className=" px-12 bg-blueLight text-white text-lg">
+                className=" px-12 bg-blueLight text-white text-lg hover:text-blueLight hover:bg-white">
                 {isLoading ? "Loading..." : "Buat"}
               </Button>
             </div>
