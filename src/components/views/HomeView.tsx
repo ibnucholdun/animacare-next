@@ -16,6 +16,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+// Framer
+import { motion } from "framer-motion";
+
 // Components
 import Button from "../ui/Button";
 import CardArtikel from "../fragments/CardArtikel";
@@ -124,24 +127,44 @@ const HomeView: React.FC<Props> = ({ article }) => {
               hewan terpercaya!. Konsultasikan kesehatan hewan peliharaan
               kesayangan anda secara gratis hanya di AnimaCare!.
             </p>
-            <Button className="bg-blueLight text-white px-7 w-2/12">
-              Mulai
-            </Button>
+            <motion.div
+              whileHover={{ scale: [null, 1.1, 1] }}
+              transition={{ duration: 0.3 }}
+              className="w-[100px]">
+              <Button className="bg-blueLight text-white py-2 w-full hover:text-blueLight hover:bg-white">
+                Mulai
+              </Button>
+            </motion.div>
           </div>
           <div className="w-full flex justify-center">
-            <Image src={ImageHero} alt="image hero" width={500} height={500} />
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}>
+              <Image
+                src={ImageHero}
+                alt="image hero"
+                width={500}
+                height={500}
+              />
+            </motion.div>
           </div>
         </div>
       </section>
       <section className="my-24 flex flex-row gap-10 justify-between items-center mx-24">
         <div className="w-full">
-          <Image
-            src={ImageHero2}
-            alt="image hero"
-            width={500}
-            height={700}
-            className="object-cover h-full w-10/12 mx-auto"
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7 }}>
+            <Image
+              src={ImageHero2}
+              alt="image hero"
+              width={500}
+              height={700}
+              className="object-cover h-full w-10/12 mx-auto"
+            />
+          </motion.div>
         </div>
         <div className="w-full">
           <h1 className="text-3xl font-semibold">Apa sih itu AnimaCare?</h1>
@@ -181,46 +204,51 @@ const HomeView: React.FC<Props> = ({ article }) => {
           </div>
           <div className="w-full">
             <div className="my-10 h-full">
-              <Swiper
-                breakpoints={{
-                  320: {
-                    slidesPerView: 1,
-                  },
-                  480: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                  },
-                  769: {
-                    slidesPerView: 3,
-                    spaceBetween: 40,
-                  },
-                }}
-                spaceBetween={150}
-                slidesPerView={3}
-                scrollbar={{ draggable: true }}
-                mousewheel
-                navigation
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => {}}
-                modules={[
-                  Navigation,
-                  Pagination,
-                  Mousewheel,
-                  Keyboard,
-                  Scrollbar,
-                  A11y,
-                ]}>
-                {article?.map((article: any) => (
-                  <SwiperSlide key={article.id} className="flex flex-col">
-                    <CardArtikel
-                      image={article?.image}
-                      title={article?.title}
-                      description={article?.description}
-                      link={`/artikel/detail-artikel/${article?.id}`}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1 }}>
+                <Swiper
+                  breakpoints={{
+                    320: {
+                      slidesPerView: 1,
+                    },
+                    480: {
+                      slidesPerView: 2,
+                      spaceBetween: 30,
+                    },
+                    769: {
+                      slidesPerView: 3,
+                      spaceBetween: 40,
+                    },
+                  }}
+                  spaceBetween={150}
+                  slidesPerView={3}
+                  scrollbar={{ draggable: true }}
+                  mousewheel
+                  navigation
+                  onSwiper={(swiper) => console.log(swiper)}
+                  onSlideChange={() => {}}
+                  modules={[
+                    Navigation,
+                    Pagination,
+                    Mousewheel,
+                    Keyboard,
+                    Scrollbar,
+                    A11y,
+                  ]}>
+                  {article?.map((article: any) => (
+                    <SwiperSlide key={article.id} className="flex flex-col">
+                      <CardArtikel
+                        image={article?.image}
+                        title={article?.title}
+                        description={article?.description}
+                        link={`/artikel/detail-artikel/${article?.id}`}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -233,13 +261,24 @@ const HomeView: React.FC<Props> = ({ article }) => {
         <div className="flex flex-wrap items-center justify-center gap-12 mt-10">
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {iconBelanja.map((item, index) => (
-              <Link
-                href={item.link || ""}
-                className="border-blueLight flex flex-col items-center justify-center px-3 py-11 gap-3 border-2 rounded-md h-[250px] w-[200px]"
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
                 key={index}>
-                <Image src={item.icon} width={100} height={100} alt={"icon"} />
-                <p className="text-xl font-semibold">{item.title}</p>
-              </Link>
+                <Link
+                  href={item.link || ""}
+                  className="border-blueLight flex flex-col items-center justify-center px-3 py-11 gap-3 border-2 rounded-md h-[250px] w-[200px]"
+                  key={index}>
+                  <Image
+                    src={item.icon}
+                    width={100}
+                    height={100}
+                    alt={"icon"}
+                  />
+                  <p className="text-xl font-semibold">{item.title}</p>
+                </Link>
+              </motion.div>
             ))}
             <Link
               href={"/belanja"}

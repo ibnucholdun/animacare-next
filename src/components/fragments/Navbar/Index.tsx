@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 type Props = {};
 
@@ -44,38 +45,54 @@ const Navbar = (props: Props) => {
       </div>
       <nav className="">
         <ul className="flex flex-row gap-10 items-center">
-          <Link
-            href="/"
-            className={`font-md cursor-default ${
-              pathname === "/" &&
-              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
-            } hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight`}>
-            Beranda
-          </Link>
-          <Link
-            href="/artikel"
-            className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
-              activeArtikel.includes(pathname.split("/")[1]) &&
-              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
-            }`}>
-            Artikel
-          </Link>
-          <Link
-            href="/forum"
-            className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
-              activeForum.includes(pathname.split("/")[1]) &&
-              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
-            }`}>
-            Forum
-          </Link>
-          <Link
-            href="/belanja"
-            className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
-              activeBelanja.includes(pathname.split("/")[1]) &&
-              "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
-            }`}>
-            Belanja
-          </Link>
+          <motion.div
+            whileHover={{ scale: [null, 1.2, 1.1] }}
+            transition={{ duration: 0.3 }}>
+            <Link
+              href="/"
+              className={`font-md cursor-default ${
+                pathname === "/" &&
+                "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+              } hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight`}>
+              Beranda
+            </Link>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: [null, 1.2, 1.1] }}
+            transition={{ duration: 0.3 }}>
+            <Link
+              href="/artikel"
+              className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
+                activeArtikel.includes(pathname.split("/")[1]) &&
+                "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+              }`}>
+              Artikel
+            </Link>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: [null, 1.2, 1.1] }}
+            transition={{ duration: 0.3 }}>
+            <Link
+              href="/forum"
+              className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
+                activeForum.includes(pathname.split("/")[1]) &&
+                "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+              }`}>
+              Forum
+            </Link>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: [null, 1.2, 1.1] }}
+            transition={{ duration: 0.3 }}>
+            <Link
+              href="/belanja"
+              className={`font-md cursor-default hover:underline hover:underline-offset-[10px] hover:decoration-2 hover:decoration-blueLight hover:text-blueLight ${
+                activeBelanja.includes(pathname.split("/")[1]) &&
+                "text-blueLight  underline underline-offset-[10px] decoration-2 decoration-blueLight"
+              }`}>
+              Belanja
+            </Link>
+          </motion.div>
           {data ? (
             <div className="" ref={ref}>
               <Button
@@ -96,6 +113,7 @@ const Navbar = (props: Props) => {
                   <i className="bx bx-chevron-down text-xl"></i>
                 )}
               </Button>
+
               {isMenuOpen && (
                 <div className={`absolute top-16 right-[70px] z-50`}>
                   <div className="w-[160px] h-[100px] bg-blueLight flex flex-col items-start justify-center rounded-lg border text-white">
@@ -116,12 +134,16 @@ const Navbar = (props: Props) => {
               )}
             </div>
           ) : (
-            <Button
-              type="button"
-              className=" bg-blueLight px-4 text-white hover:bg-white hover:text-blueLight text-md"
-              onClick={() => signIn()}>
-              Login
-            </Button>
+            <motion.div
+              whileHover={{ scale: [null, 1.2, 1.1] }}
+              transition={{ duration: 0.3 }}>
+              <Button
+                type="button"
+                className=" bg-blueLight px-4 text-white hover:bg-white hover:text-blueLight text-md"
+                onClick={() => signIn()}>
+                Login
+              </Button>
+            </motion.div>
           )}
         </ul>
       </nav>
