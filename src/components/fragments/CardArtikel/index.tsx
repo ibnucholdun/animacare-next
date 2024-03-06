@@ -11,7 +11,7 @@ type Props = {
 
 const CardArtikel: React.FC<Props> = ({ image, title, description, link }) => {
   return (
-    <div className="w-[400px] border shadow p-5 rounded-xl flex flex-col">
+    <div className="w-[400px] border shadow p-5 rounded-xl flex flex-col bg-white">
       <div className="mb-5">
         <Image
           src={image}

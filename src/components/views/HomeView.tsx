@@ -32,6 +32,7 @@ import {
   IconObat,
   IconBoxPasir,
 } from "@/assets/icons";
+import { Vector1, Vector2, Vector3, Vector4, Vector5 } from "@/assets/vector";
 
 type Props = {
   article: any;
@@ -83,24 +84,56 @@ const iconBelanja = [
 const HomeView: React.FC<Props> = ({ article }) => {
   return (
     <main className="py-3">
-      <section className="flex flex-row gap-5 justify-between items-center py-11">
-        <div className="w-full flex flex-col gap-4">
-          <h1 className="text-3xl font-semibold">
-            <span className="text-blueLight">Solusi</span> Kesehatan{" "}
-            <span className="text-blueLight">Hewan</span> Tersayang
-          </h1>
-          <p className="text-md">
-            Hadir untuk membantu animal lovers berkonsultasi dengan dokter hewan
-            terpercaya!. Konsultasikan kesehatan hewan peliharaan kesayangan
-            anda secara gratis hanya di AnimaCare!.
-          </p>
-          <Button className="bg-blueLight text-white px-7 w-2/12">Mulai</Button>
-        </div>
-        <div className="w-full flex justify-center">
-          <Image src={ImageHero} alt="image hero" width={500} height={500} />
+      <section className="relative">
+        <Image
+          src={Vector1}
+          alt="vector1"
+          width={100}
+          height={100}
+          className="absolute left-5 bottom-0"
+        />
+        <Image
+          src={Vector2}
+          alt="vector2"
+          width={100}
+          height={100}
+          className="absolute right-0 bottom-1/2"
+        />
+        <Image
+          src={Vector4}
+          alt="vector4"
+          width={100}
+          height={100}
+          className="absolute right-1/3 bottom-12 -z-10"
+        />
+        <Image
+          src={Vector5}
+          alt="vector5"
+          width={100}
+          height={100}
+          className="absolute right-1/2 top-5"
+        />
+        <div className="flex flex-row gap-5 justify-between items-center py-11   mx-24">
+          <div className="w-full flex flex-col gap-4">
+            <h1 className="text-3xl font-semibold">
+              <span className="text-blueLight">Solusi</span> Kesehatan{" "}
+              <span className="text-blueLight">Hewan</span> Tersayang
+            </h1>
+            <p className="text-md">
+              Hadir untuk membantu animal lovers berkonsultasi dengan dokter
+              hewan terpercaya!. Konsultasikan kesehatan hewan peliharaan
+              kesayangan anda secara gratis hanya di AnimaCare!.
+            </p>
+            <Button className="bg-blueLight text-white px-7 w-2/12">
+              Mulai
+            </Button>
+          </div>
+          <div className="w-full flex justify-center">
+            <Image src={ImageHero} alt="image hero" width={500} height={500} />
+          </div>
         </div>
       </section>
-      <section className="my-24 flex flex-row gap-10 justify-between items-center">
+      <section className="my-24 flex flex-row gap-10 justify-between items-center mx-24">
         <div className="w-full">
           <Image
             src={ImageHero2}
@@ -122,61 +155,77 @@ const HomeView: React.FC<Props> = ({ article }) => {
           </p>
         </div>
       </section>
-      <section className="my-24">
-        <div className="w-full flex flex-row justify-between ">
-          <h1 className="text-2xl font-semibold">
-            Jelajahi Artikel Menarik Seputar Hewan Peliharaan
-          </h1>
-          <Link href="/artikel" className="text-blueLight text-xl underline">
-            Lebih Banyak
-          </Link>
-        </div>
-        <div className="w-full">
-          <div className="my-10 h-full">
-            <Swiper
-              breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                },
-                480: {
-                  slidesPerView: 2,
-                  spaceBetween: 30,
-                },
-                769: {
-                  slidesPerView: 3,
-                  spaceBetween: 40,
-                },
-              }}
-              spaceBetween={150}
-              slidesPerView={3}
-              scrollbar={{ draggable: true }}
-              mousewheel
-              navigation
-              onSwiper={(swiper) => console.log(swiper)}
-              onSlideChange={() => {}}
-              modules={[
-                Navigation,
-                Pagination,
-                Mousewheel,
-                Keyboard,
-                Scrollbar,
-                A11y,
-              ]}>
-              {article?.map((article: any) => (
-                <SwiperSlide key={article.id} className="flex flex-col">
-                  <CardArtikel
-                    image={article?.image}
-                    title={article?.title}
-                    description={article?.description}
-                    link={`/artikel/detail-artikel/${article?.id}`}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+      <section className="my-24 relative">
+        <Image
+          src={Vector3}
+          alt="vector3"
+          width={600}
+          height={600}
+          className="absolute left-10 top-10 -z-50"
+        />
+        <Image
+          src={Vector1}
+          alt="vector1"
+          width={100}
+          height={100}
+          className="absolute right-20 bottom-0 -z-50"
+        />
+        <div className="mx-24">
+          <div className="w-full flex flex-row justify-between ">
+            <h1 className="text-2xl font-semibold">
+              Jelajahi Artikel Menarik Seputar Hewan Peliharaan
+            </h1>
+            <Link href="/artikel" className="text-blueLight text-xl underline">
+              Lebih Banyak
+            </Link>
+          </div>
+          <div className="w-full">
+            <div className="my-10 h-full">
+              <Swiper
+                breakpoints={{
+                  320: {
+                    slidesPerView: 1,
+                  },
+                  480: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                  },
+                  769: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                  },
+                }}
+                spaceBetween={150}
+                slidesPerView={3}
+                scrollbar={{ draggable: true }}
+                mousewheel
+                navigation
+                onSwiper={(swiper) => console.log(swiper)}
+                onSlideChange={() => {}}
+                modules={[
+                  Navigation,
+                  Pagination,
+                  Mousewheel,
+                  Keyboard,
+                  Scrollbar,
+                  A11y,
+                ]}>
+                {article?.map((article: any) => (
+                  <SwiperSlide key={article.id} className="flex flex-col">
+                    <CardArtikel
+                      image={article?.image}
+                      title={article?.title}
+                      description={article?.description}
+                      link={`/artikel/detail-artikel/${article?.id}`}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
         </div>
       </section>
-      <section className="my-24">
+      <section className="my-24 mx-24">
         <h1 className="text-2xl font-semibold">
           Belanja Keperluan{" "}
           <span className="text-blueLight">Hewan Kesayangan</span> Anda
